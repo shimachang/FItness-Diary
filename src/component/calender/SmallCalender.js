@@ -59,7 +59,7 @@ const SmallCalender = () => {
                 {currentMonth.map((row, i) => (
                     <React.Fragment key={i}>
                         {row.map((day, id) => (
-                            <button
+                            <button 
                                 onClick={() => {
                                     setSmallCalenderMonth(currentMonthIndex);
                                     setDaySelected(day);
