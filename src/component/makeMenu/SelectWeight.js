@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { MenuContext } from "../../context/MuneContext";
 
 const SelectWeight = () => {
-    const [weight, setWeight] = useState("");
+    const [currentWeight, setCurrentWeight] = useState("");
+
+    const {setAddWeight} = useContext(MenuContext)
 
     const handleChange = (event) => {
-        setWeight(event.target.value);
+        setCurrentWeight(event.target.value);
     };
+
+    useEffect(() => {
+        setAddWeight(currentWeight)
+    }, [currentWeight])
 
     return (
         <Box sx={{ minWidth: 90 }}>
@@ -19,7 +26,7 @@ const SelectWeight = () => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={weight}
+                    value={currentWeight}
                     label="Weight"
                     onChange={handleChange}
                 >

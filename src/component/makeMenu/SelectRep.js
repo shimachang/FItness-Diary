@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { MenuContext } from "../../context/MuneContext";
 
 const SelectRep = () => {
-    const [rep, setRep] = useState("");
+    const {setAddRep} = useContext(MenuContext)
+    const [currentRep, setCurrentRep] = useState("");
 
     const handleChange = (event) => {
-        setRep(event.target.value);
+        setCurrentRep(event.target.value);
     };
+
+    useEffect(()=> {
+        setAddRep(currentRep)
+    }, [currentRep])
 
     return (
         <Box sx={{ minWidth: 80 }}>
@@ -19,7 +25,7 @@ const SelectRep = () => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={rep}
+                    value={currentRep}
                     label="rep"
                     onChange={handleChange}
                 >

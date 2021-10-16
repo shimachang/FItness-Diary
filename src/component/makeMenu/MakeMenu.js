@@ -8,6 +8,7 @@ import { TextField } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import MakeMenuList from "./MakeMenuList";
+import MenuProvider from "../../context/MuneContext";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -54,7 +55,12 @@ const MakeMenu = () => {
         if (dig(currentUser, "currentUser", "uid")) {
             Dom = (
                 <form className={classes.form}>
-                    <TextField value={inputName} className={classes.input} onChange={(e) => setInputName(e.target.value)} placeholder="Menu" />
+                    <TextField
+                        value={inputName}
+                        className={classes.input}
+                        onChange={(e) => setInputName(e.target.value)}
+                        placeholder="Menu"
+                    />
                     <Button
                         variant="contained"
                         color="primary"
@@ -75,11 +81,13 @@ const MakeMenu = () => {
 
     return (
         <>
-        <MakeMenuList />
-        <div className={classes.root}>
-            {formRender()}
-            <MenuList menus={menus} fetch={fetch} />
-        </div>
+            <MenuProvider>
+                <MakeMenuList />
+                <div className={classes.root}>
+                    {formRender()}
+                    <MenuList menus={menus} fetch={fetch} />
+                </div>
+            </MenuProvider>
         </>
     );
 };

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { db } from "../../firebase";
+import { MenuContext } from "../../context/MuneContext";
 
 const SelectMenu = ({ currentTarget, currentCategory }) => {
     const [menu, setMenu] = useState([
@@ -13,6 +14,9 @@ const SelectMenu = ({ currentTarget, currentCategory }) => {
             target: "",
         },
     ]);
+
+    const { setAddMenu } = useContext(MenuContext);
+    
     const [currentMenu, setCurrentMenu] = useState("");
     useEffect(() => {
         const armMenus = db
@@ -28,6 +32,10 @@ const SelectMenu = ({ currentTarget, currentCategory }) => {
                 )
             );
     }, [currentTarget, currentCategory]);
+
+    useEffect(() => {
+        setAddMenu(currentMenu);
+    }, [currentMenu]);
 
     const handleChange = (event) => {
         setCurrentMenu(event.target.value);
