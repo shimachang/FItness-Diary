@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { MenuContext } from "../../context/MuneContext";
+import { MenuContext } from "../../context/MenuContext";
 
 const SelectRep = () => {
     const {setAddRep} = useContext(MenuContext)

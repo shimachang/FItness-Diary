@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import SelectMenu from "./SelectMenu";
-import { MenuContext } from "../../context/MuneContext";
+import { MenuContext } from "../../context/MenuContext";
 
 const SelectTarget = () => {
     const targets = ["腕", "胸", "脚", "肩", "背中", "腹"];

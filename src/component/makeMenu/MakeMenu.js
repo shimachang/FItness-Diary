@@ -8,7 +8,7 @@ import { TextField } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import MakeMenuList from "./MakeMenuList";
-import MenuProvider from "../../context/MuneContext";
+import MenuProvider from "../../context/MenuContext";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -38,10 +38,18 @@ const MakeMenu = () => {
         fetch();
     }, [currentUser]);
 
+    // const fetch = async () => {
+    //     if (dig(currentUser, "currentUser", "uid")) {
+    //         const data = await Api.initGet(currentUser.currentUser.uid);
+    //         await setMenus(data);
+    //     }
+    // };
     const fetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
-            const data = await Api.initGet(currentUser.currentUser.uid);
+            const data = await Api.getMakeMenuList(currentUser.currentUser.uid);
             await setMenus(data);
+        } else {
+            console.log('error')
         }
     };
 
@@ -50,41 +58,12 @@ const MakeMenu = () => {
         await setInputName("");
         fetch();
     };
-    const formRender = () => {
-        let Dom;
-        if (dig(currentUser, "currentUser", "uid")) {
-            Dom = (
-                <form className={classes.form}>
-                    <TextField
-                        value={inputName}
-                        className={classes.input}
-                        onChange={(e) => setInputName(e.target.value)}
-                        placeholder="Menu"
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        type="button"
-                        disabled={inputName.length ? false : true}
-                        onClick={() => post()}
-                    >
-                        追加
-                    </Button>
-                </form>
-            );
-        } else {
-            Dom = <Button onClick={signInWithGoogle}>googleログイン</Button>;
-        }
-        return Dom;
-    };
 
     return (
         <>
             <MenuProvider>
                 <MakeMenuList />
                 <div className={classes.root}>
-                    {formRender()}
                     <MenuList menus={menus} fetch={fetch} />
                 </div>
             </MenuProvider>

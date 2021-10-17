@@ -40,13 +40,14 @@ const MenuList = (props) => {
         await Api.toggleComplete(id);
         props.fetch();
     };
-    const menuList = props.menus.map((menu) => {
+    const menuList = props.menus.map((menu, i) => {
         return (
-            <ListItem key={menu.id}>
-                <ListItemIcon>
-                    <Checkbox checked={menu.isComplete} onChange={() => checkHandle(menu.id)} />
-                </ListItemIcon>
-                <ListItemText primary={menu.content} />
+            <ListItem key={i}>
+                <ListItemText primary={menu.target} />
+                <ListItemText primary={menu.category} />
+                <ListItemText primary={menu.menu} />
+                <ListItemText primary={menu.weight} />
+                <ListItemText primary={menu.rep} />
                 <ListItemSecondaryAction>
                     <IconButton
                         edge="end"

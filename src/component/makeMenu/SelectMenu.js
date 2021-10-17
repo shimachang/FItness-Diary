@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { db } from "../../firebase";
-import { MenuContext } from "../../context/MuneContext";
+import { MenuContext } from "../../context/MenuContext";
 
 const SelectMenu = ({ currentTarget, currentCategory }) => {
     const [menu, setMenu] = useState([
@@ -16,7 +16,7 @@ const SelectMenu = ({ currentTarget, currentCategory }) => {
     ]);
 
     const { setAddMenu } = useContext(MenuContext);
-    
+
     const [currentMenu, setCurrentMenu] = useState("");
     useEffect(() => {
         const armMenus = db

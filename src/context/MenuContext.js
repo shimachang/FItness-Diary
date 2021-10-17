@@ -20,7 +20,6 @@ export const MenuProvider = ({ children }) => {
         addRep,
         setAddRep,
     };
-    console.log(addTarget, addCategory, addMenu, addWeight, addRep);
 
     return <MenuContext.Provider value={value}>{children}</MenuContext.Provider>;
 };
