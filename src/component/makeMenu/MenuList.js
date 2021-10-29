@@ -1,15 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
-import { signInWithGoogle } from "../../firebase/index";
 import * as Api from "../../firebase/api";
 import {
     ListItem,
-    ListItemIcon,
     ListItemText,
     ListItemSecondaryAction,
     IconButton,
-    Checkbox,
+    Button,
+    TextField,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core";
@@ -31,20 +30,39 @@ const useStyles = makeStyles(() => ({
 const MenuList = (props) => {
     const classes = useStyles();
 
-    const deleteHandle = (id) => {
-        Api.menuDelete(id);
+    const [listName, setListName] = useState("");
+    const currentUser = useContext(AuthContext);
+    const propsMenus = props.menus;
+    const myMenuList = propsMenus.map((e) => [e.target, e.category, e.menu, e.weight, e.rep]);
+    const newMyMenuList = (arr) => {
+        let obj = {};
+        for (let i = 0; i < arr.length; i++) {
+            obj[i] = arr[i];
+        }
+        return obj;
+    };
+    const submit = (props) => {
+        if (propsMenus) {
+            Api.addMyMenuList(
+                listName,
+                dig(currentUser, "currentUser", "uid"),
+                newMyMenuList(myMenuList)
+            );
+        }
+    };
+
+    const deleteHandle = (uid, id) => {
+        Api.deleteTemporary(uid, id);
         props.fetch();
     };
 
-    const checkHandle = async (id) => {
-        await Api.toggleComplete(id);
-        props.fetch();
-    };
-    const menuList = props.menus.map((menu, i) => {
+    // const checkHandle = async (id) => {
+    //     await Api.toggleComplete(id);
+    //     props.fetch();
+    // };
+    const menuList = propsMenus.map((menu) => {
         return (
-            <ListItem key={i}>
-                <ListItemText primary={menu.target} />
-                <ListItemText primary={menu.category} />
+            <ListItem key={menu.id}>
                 <ListItemText primary={menu.menu} />
                 <ListItemText primary={menu.weight} />
                 <ListItemText primary={menu.rep} />
@@ -52,7 +70,7 @@ const MenuList = (props) => {
                     <IconButton
                         edge="end"
                         aria-label="delete"
-                        onClick={() => deleteHandle(menu.id)}
+                        onClick={() => deleteHandle(menu.uid, menu.id)}
                     >
                         <DeleteIcon />
                     </IconButton>
@@ -61,10 +79,31 @@ const MenuList = (props) => {
         );
     });
     return (
-        <div className={classes.root}>
-            <h2>あなたの筋トレメニュー</h2>
-            <ul className={classes.ul}>{menuList}</ul>
-        </div>
+        <>
+            <div className={classes.root}>
+                <h2>あなたの筋トレメニュー</h2>
+                <div className="text-center mb-10">
+                    <TextField
+                        id="standard-basic"
+                        label="Add List Name"
+                        variant="standard"
+                        autoComplete="off"
+                        onChange={(e) => setListName(e.target.value)}
+                    />
+                </div>
+                <ul className={classes.ul}>{menuList}</ul>
+            </div>
+            <div>
+                <Button
+                    onClick={() => submit(props)}
+                    variant="contained"
+                    disabled={listName ? false : true}
+                    color="primary"
+                >
+                    メニュー作成
+                </Button>
+            </div>
+        </>
     );
 };
 

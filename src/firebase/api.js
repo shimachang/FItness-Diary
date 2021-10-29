@@ -1,25 +1,7 @@
-import firebase from "@firebase/app-compat";
-import { collection, doc, getDoc } from "firebase/firestore";
-import { useState } from "react";
 import { db, firebaseTimeStamp } from "./index";
 
-// export const initGet = async (uid) => {
-//     const menu = await db.collection("event").orderBy("created_at", "desc").where("uid", "==", uid);
-
-//     return menu.get().then((snapshot) => {
-//         let menus = [];
-//         snapshot.forEach((doc) => {
-//             menus.push({
-//                 id: doc.id,
-//                 content: doc.data().content,
-//                 isComplete: doc.data().isComplete,
-//             });
-//         });
-//         return menus;
-//     });
-// };
-export const getMakeMenuList = async (uid) => {
-    const menu = await db.collection("users").doc(uid).collection('test')
+export const getTemporaryList = async (uid) => {
+    const menu = await db.collection("users").doc(uid).collection("Temporary_storage");
 
     return menu.get().then((snapshot) => {
         let menuLists = [];
@@ -30,30 +12,40 @@ export const getMakeMenuList = async (uid) => {
                 menu: doc.data().menu,
                 weight: doc.data().weight,
                 rep: doc.data().rep,
-                
+                uid: doc.data().uid,
+                id: doc.data().id,
             });
         });
-        console.log(menuLists)
         return menuLists;
     });
 };
 
-export const addEvent = (content, uid) => {
-    db.collection("event").add({
-        content: content,
-        uid: uid,
-        isComplete: false,
-        created_at: firebaseTimeStamp,
+export const getMyMenuList = async (uid) => {
+    const menu = await db.collection("users").doc(uid).collection("MyMenuList");
+    return menu.get().then((snapshot) => {
+        let menuLists = [];
+        snapshot.forEach((doc) => {
+            menuLists.push({
+                listName: doc.data().listName,
+                uid: doc.data().uid,
+                id: doc.data().id,
+                menus: [doc.data().menus],
+            });
+        });
+        return menuLists;
     });
 };
 
-export const menuDelete = (id) => {
-    db.collection("todo").doc(id).delete();
+export const deleteTemporary = (uid, id) => {
+    db.collection("users").doc(uid).collection("Temporary_storage").doc(id).delete();
+};
+
+export const deleteMyMenuList = (uid, id) => {
+    db.collection("users").doc(uid).collection("MyMenuList").doc(id).delete();
 };
 
 export const toggleComplete = async (id) => {
     const menu = await db.collection("todo").doc(id).get();
-    console.log(menu.isComplete);
     return db
         .collection("todo")
         .doc(id)
@@ -63,8 +55,7 @@ export const toggleComplete = async (id) => {
         });
 };
 
-export const addMenuList = (
-    listName,
+export const addTemporaryMenuList = (
     currentUser,
     addTarget,
     addCategory,
@@ -72,13 +63,28 @@ export const addMenuList = (
     addWeight,
     addRep
 ) => {
-    db.collection("users").doc(currentUser).collection(listName).add({
-        listName: listName,
+    const collection = db.collection("users").doc(currentUser).collection("Temporary_storage");
+    const newDoc = collection.doc().id;
+    collection.doc(newDoc).set({
+        uid: currentUser,
         target: addTarget,
         category: addCategory,
         menu: addMenu,
         weight: addWeight,
         rep: addRep,
         created_at: firebaseTimeStamp,
+        id: newDoc,
+    });
+};
+
+export const addMyMenuList = (listName, currentUser, menus) => {
+    const collection = db.collection("users").doc(currentUser).collection("MyMenuList");
+    const newDoc = collection.doc().id;
+    collection.doc(newDoc).set({
+        listName: listName,
+        uid: currentUser,
+        menus: menus,
+        created_at: firebaseTimeStamp,
+        id: newDoc,
     });
 };

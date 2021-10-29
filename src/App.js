@@ -27,7 +27,7 @@ const App = () => {
         <AuthProvider>
             <Header setTab={setTab} />
             <Body />
-            <Footer />
+            {/* <Footer /> */}
         </AuthProvider>
     );
 };
