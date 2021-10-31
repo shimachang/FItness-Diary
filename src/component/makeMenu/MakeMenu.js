@@ -47,11 +47,11 @@ const MakeMenu = () => {
     return (
         <>
             <MenuProvider>
+                <MakedList />
                 <MakeMenuList fetch={fetch} />
                 <div className={classes.root}>
                     <MenuList menus={menus} fetch={fetch} />
                 </div>
-                <MakedList />
             </MenuProvider>
         </>
     );

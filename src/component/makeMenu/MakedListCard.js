@@ -1,10 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import { ExpandMore } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core";
+import { borderColor } from "@mui/system";
+
+const useStyles = makeStyles(() => ({
+    list: {
+        marginBottom: "3",
+        borderBottom: "1px solid black",
+    },
+}));
 
 const MakedListCard = (props) => {
+    const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const propsMenus = props.menu.menus;
     const newPropsMenus = Object.values(propsMenus[0]);
@@ -20,42 +32,27 @@ const MakedListCard = (props) => {
 
     const MenuList = newPropsMenus.map((list, i) => {
         return (
-            <MenuItem key={i} >{list}</MenuItem>
+            <Typography
+                mb={2}
+                sx={{ borderBottom: 1, borderColor: "grey.500" }}
+                key={i}
+            >{`${list[2]} ${list[3]}kg ${list[4]}rep `}</Typography>
         );
     });
 
-    // const List = () => {
-    //     return (
-    //         <diV>{propsMenus}</diV>
-    //     )
-    // }
-
-    // for (const list of propsMenus) {
-    //     console.log(list)
-    // }
     return (
         <>
-            <div className="text-center mt-10">
-                <Button
-                    id="basic-button"
-                    aria-controls="basic-menu"
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    variant="contained"
-                    onClick={handleClick}
-                >
-                    {props.menu.listName}
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                    }}
-                    >{MenuList}</Menu>
-                    
+            <div>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMore />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                        <Typography>{props.menu.listName}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>{MenuList}</AccordionDetails>
+                </Accordion>
             </div>
         </>
     );

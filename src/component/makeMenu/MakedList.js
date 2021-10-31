@@ -40,7 +40,8 @@ const MakedList = () => {
 
     return (
         <>
-            <div className="container text-center mx-auto mt-4 py-4 flex flex-col justify-center">
+            <div className="text-center text-xl mt-10 pb-4">My Menu List</div>
+            <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
                 {makedMenus.length > 0 &&
                     makedMenus.map((menu) => (
                         <div key={menu.id}>

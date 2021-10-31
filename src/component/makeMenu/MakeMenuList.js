@@ -43,7 +43,7 @@ const MakeMenuList = (props) => {
     };
     return (
         <div className="bg-green-50  pt-6 pb-6">
-            <div className="text-center text-xl  pb-4">My Menu List</div>
+            <div className="text-center text-xl mt-10 pb-4">Make Menu List</div>
             <MakeMenuCard />
             <div className="text-center mt-4 mb-6">
                 <Button
