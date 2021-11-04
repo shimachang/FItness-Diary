@@ -1,16 +1,19 @@
-import { useContext } from 'react'
-import plusIcon from '../../assets/plus.svg'
-import GlobalContext from '../../context/GlobalContext'
+import { useContext } from "react";
+import GlobalContext from "../../context/GlobalContext";
+import { AddCircleOutlineOutlined } from "@material-ui/icons";
 
 const CreateEventButton = () => {
-    const {setShowEventModal } = useContext(GlobalContext)
+    const { setShowEventModal } = useContext(GlobalContext);
 
     return (
-        <button onClick={() => setShowEventModal(true)} className='border py-2 p-2 rounded-full flex items-center shadow-md hover:shadow-2xl'>
-            <img src={plusIcon} alt='create_event' className='w-7 h-7' />
-            <span className='pl-3 pr-7'>Create</span>
+        <button
+            onClick={() => setShowEventModal(true)}
+            className="border py-2 p-2 rounded-full flex items-center m-auto shadow-md hover:shadow-2xl"
+        >
+            <AddCircleOutlineOutlined />
+            <span className="pl-3 pr-7">Create</span>
         </button>
-    )
-}
+    );
+};
 
-export default CreateEventButton
+export default CreateEventButton;

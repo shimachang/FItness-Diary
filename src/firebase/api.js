@@ -88,3 +88,15 @@ export const addMyMenuList = (listName, currentUser, menus) => {
         id: newDoc,
     });
 };
+
+export const addEvents = (listName, currentUser, menus) => {
+    const collection = db.collection("users").doc(currentUser).collection("Events");
+    const newDoc = collection.doc().id;
+    collection.doc(newDoc).set({
+        listName: listName,
+        uid: currentUser,
+        menus: menus,
+        created_at: firebaseTimeStamp,
+        id: newDoc,
+    });
+};

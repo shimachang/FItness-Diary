@@ -5,18 +5,18 @@ import { getMonth } from "../../util";
 import React, { useState, useContext, useEffect } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import EventModal from "./EventModal";
+import MakedModal from './MakedModal'
 
-const days = ["日", "月", "火", "水", "木", "金", "土"];
-
-export const Calender = () => {
+const Calender = () => {
     const [currentMonth, setCurrentMonth] = useState(getMonth());
-    const { monthIndex, showEventModal } = useContext(GlobalContext);
+    const { monthIndex, showEventModal, showMakedModal } = useContext(GlobalContext);
     useEffect(() => {
         setCurrentMonth(getMonth(monthIndex));
     }, [monthIndex]);
     return (
         <React.Fragment>
             {showEventModal && <EventModal />}
+            {showMakedModal && <MakedModal />}
             <div className="h-screen flex flex-col">
                 <CalenderHeader />
                 <div className="flex flex-1">
@@ -27,3 +27,5 @@ export const Calender = () => {
         </React.Fragment>
     );
 };
+
+export default Calender;

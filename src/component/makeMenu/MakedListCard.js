@@ -20,7 +20,6 @@ const MakedListCard = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const propsMenus = props.menu.menus;
     const newPropsMenus = Object.values(propsMenus[0]);
-    console.log(newPropsMenus);
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {

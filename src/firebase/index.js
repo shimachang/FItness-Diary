@@ -31,7 +31,6 @@ export const logOut = () => {
             document.location.reload();
         });
 };
-// export const getDocs = firebase.firestore.getDoc();
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export const storage = firebase.storage();

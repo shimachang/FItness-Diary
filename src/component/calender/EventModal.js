@@ -1,18 +1,34 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import GlobalContext from "../../context/GlobalContext";
+import { AuthContext } from "../../context/AuthContext";
 import { saveEvents } from "../../assets/saveEvents";
 import { db, firebaseTimeStamp } from "../../firebase";
+import * as Api from "../../firebase/api";
+import dig from "object-dig";
+import { AddCircleOutlineOutlined } from "@material-ui/icons";
 
 const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 const EventModal = () => {
-    const { setShowEventModal, daySelected, dispatchCalEvent } = useContext(GlobalContext);
+    const {
+        setShowEventModal,
+        setShowMekedModal,
+        daySelected,
+        dispatchCalEvent,
+        eventMenu,
+        setEventMenu,
+    } = useContext(GlobalContext);
 
+    const currentUser = useContext(AuthContext);
+    const openMakedListModal = (e) => {
+        setShowMekedModal(e);
+    };
     const saveEventSubmit = (e) => {
         e.preventDefault();
-        const eventRef = db.collection("event");
+        const eventRef = db.collection("users").doc(currentUser).collection("Events");
+
         const timestamp = firebaseTimeStamp.now();
         const calenderEvent = {
-            title: title,
+            title: eventMenu,
             description: description,
             label: selectedLabel,
             day: daySelected.valueOf(),
@@ -25,10 +41,8 @@ const EventModal = () => {
         calenderEvent.id = id;
         calenderEvent.created_at = timestamp;
         eventRef.doc(id).set(calenderEvent);
-
     };
 
-    const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [selectedLabel, seteSelectedLabel] = useState(labelsClasses[0]);
     return (
@@ -42,16 +56,8 @@ const EventModal = () => {
                 </header>
                 <div className="p-3">
                     <div className="grid grid-cols-1/5 items-end gap-y-7">
-                        <div></div>
-                        <input
-                            type="text"
-                            name="title"
-                            placeholder="add title"
-                            value={title}
-                            required
-                            className="pt-3 border-0 text-gray-600 text-xl font-semibold pd-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
+                        <AddCircleOutlineOutlined onClick={() => openMakedListModal(true)} />
+                        <div>{eventMenu}</div>
                         <span className="material-icons-outlined text-gray-400">schedule</span>
                         <p>{daySelected.format("dddd, MMMM D日")}</p>
                         <span className="material-icons-outlined text-gray-400">segment</span>
@@ -64,7 +70,9 @@ const EventModal = () => {
                             className="pt-3 border-0 text-gray-600 pd-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                             onChange={(e) => setDescription(e.target.value)}
                         />
-                        <span className="material-icons-outlined text-gray-400">bookmark_border</span>
+                        {/* <span className="material-icons-outlined text-gray-400">
+                            bookmark_border
+                        </span>
                         <div className="flex gap-x-2">
                             {labelsClasses.map((labelClass, i) => (
                                 <span
@@ -73,11 +81,13 @@ const EventModal = () => {
                                     className={`bg-${labelClass}-500 w-6 h-6 rounded-full flex items-center justify-center`}
                                 >
                                     {selectedLabel === labelClass && (
-                                        <span className="material-icons-outlined text-white ">check</span>
+                                        <span className="material-icons-outlined text-white ">
+                                            check
+                                        </span>
                                     )}
                                 </span>
                             ))}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <footer className="flex justify-end  border-t p-3 mt-5">

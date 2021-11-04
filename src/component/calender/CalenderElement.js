@@ -34,6 +34,7 @@ const CalenderElement = (props) => {
     const isCurrentMonth = isSameMonth(day, today);
     const textColor = isCurrentMonth ? "textPrimary" : "textSecondary";
 
+
     return (
         <div className={classes.element}>
             <Typography

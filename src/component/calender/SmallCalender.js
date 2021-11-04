@@ -50,7 +50,7 @@ const SmallCalender = () => {
                     </button>
                 </div>
             </header>
-            <div className="grid grid-cols-7 grid-rows-6">
+            <div className="grid grid-cols-7 grid-rows-7">
                 {currentMonth[0].map((day, i) => (
                     <span key={i} className="text-sm py-1 text-center">
                         {day.format("dd")}

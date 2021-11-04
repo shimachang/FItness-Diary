@@ -1,4 +1,4 @@
-import { Calender } from "./component/calender/Calender";
+import Calender from "./component/calender/Calender";
 import Header from "./component/global/Header";
 import { AuthProvider } from "./context/AuthContext";
 import MakeMenu from "./component/makeMenu/MakeMenu";
@@ -7,7 +7,7 @@ import TodayMenus from "./component/todayMenu/TodayMenus";
 import { useState } from "react";
 
 const App = () => {
-    const [tab, setTab] = useState("makeMenu");
+    const [tab, setTab] = useState("calender");
 
     const Body = () => {
         switch (tab) {
