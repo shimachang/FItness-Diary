@@ -12,7 +12,9 @@ const GlobalContext = React.createContext({
     setShowMekedModal: () => {},
     dispatchCalEvent: ({tyep, payload}) => {},
     savedEvents: [],
-    setEventMenu: []
+    setEventListName: () => {},
+    setEventListId: () => {}
+
 })
 
 export default GlobalContext

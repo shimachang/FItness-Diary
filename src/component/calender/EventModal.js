@@ -14,37 +14,31 @@ const EventModal = () => {
         setShowMekedModal,
         daySelected,
         dispatchCalEvent,
-        eventMenu,
-        setEventMenu,
+        eventListId,
+        eventListName,
     } = useContext(GlobalContext);
-
+    console.log(eventListId);
     const currentUser = useContext(AuthContext);
     const openMakedListModal = (e) => {
         setShowMekedModal(e);
     };
     const saveEventSubmit = (e) => {
         e.preventDefault();
-        const eventRef = db.collection("users").doc(currentUser).collection("Events");
-
-        const timestamp = firebaseTimeStamp.now();
-        const calenderEvent = {
-            title: eventMenu,
-            description: description,
-            label: selectedLabel,
-            day: daySelected.valueOf(),
-        };
-        dispatchCalEvent({ type: "push", payload: calenderEvent });
+        if (eventListId) {
+            Api.addEvents(
+                eventListName,
+                eventListId,
+                dig(currentUser, "currentUser", "uid"),
+                daySelected.valueOf()
+            );
+        }
+        // dispatchCalEvent({ type: "push", payload: calenderEvent });
         setShowEventModal(false);
-
-        const ref = eventRef.doc();
-        const id = ref.id;
-        calenderEvent.id = id;
-        calenderEvent.created_at = timestamp;
-        eventRef.doc(id).set(calenderEvent);
     };
-
+    console.log(daySelected.valueOf());
     const [description, setDescription] = useState("");
     const [selectedLabel, seteSelectedLabel] = useState(labelsClasses[0]);
+
     return (
         <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
             <form className="bg-white rounded-lg shadow-2xl w-1/4">
@@ -57,7 +51,7 @@ const EventModal = () => {
                 <div className="p-3">
                     <div className="grid grid-cols-1/5 items-end gap-y-7">
                         <AddCircleOutlineOutlined onClick={() => openMakedListModal(true)} />
-                        <div>{eventMenu}</div>
+                        <div>{eventListName ? eventListName : "add a menu"}</div>
                         <span className="material-icons-outlined text-gray-400">schedule</span>
                         <p>{daySelected.format("dddd, MMMM D日")}</p>
                         <span className="material-icons-outlined text-gray-400">segment</span>

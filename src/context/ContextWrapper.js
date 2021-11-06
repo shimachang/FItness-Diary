@@ -28,7 +28,8 @@ const ContextWrapper = (props) => {
     const [showEventModal, setShowEventModal] = useState(false);
     const [showMakedModal, setShowMekedModal] = useState(false);
     const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, [], initEvents);
-    const [eventMenu, setEventMenu] = useState([]) 
+    const [eventListName, setEventListName] = useState('') 
+    const [eventListId, setEventListId] = useState('') 
 
     useEffect(() => {
         localStorage.setItem('savedEvents', JSON.stringify(savedEvents))
@@ -54,8 +55,10 @@ const ContextWrapper = (props) => {
                 setShowMekedModal,
                 dispatchCalEvent,
                 savedEvents,
-                eventMenu,
-                setEventMenu
+                eventListName,
+                setEventListName,
+                eventListId,
+                setEventListId
             }}
         >
             {props.children}

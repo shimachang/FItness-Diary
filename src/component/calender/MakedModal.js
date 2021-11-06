@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
         backgroundColor: "rgba(0,0,0, .5)",
     },
     body: {
-        width: "240px",
+        width: "340px",
         padding: "24px 36px",
         backgroundColor: "white",
     },
@@ -33,10 +33,9 @@ const useStyles = makeStyles(() => ({
 
 const MakedModal = () => {
     const classes = useStyles();
-    const { setShowMekedModal, setEventMenu } = useContext(GlobalContext);
+    const { setShowMekedModal, setEventListName, setEventListId } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const [makedMenus, setMakedMenus] = useState([]);
-    const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
         makedFetch();
@@ -49,16 +48,19 @@ const MakedModal = () => {
         }
     };
 
-    const initData = { singleSelect: "" };
+    const initData = { selectedListName: "" };
     const [selectedMenu, setSelectedMenu] = useState(initData);
-    const toggleChecked = (e) => {
-        const newValue = e.target.velue === selectedMenu.singleSelect ? "" : e.target.value;
-        const newData = { ...selectedMenu, singleSelect: newValue };
+    const selectedName = selectedMenu.selectedListName;
+    const checkedHandle = (e) => {
+        const newValue = e.currentTarget.name === selectedName ? "" : e.currentTarget.name;
+        const newData = { ...selectedMenu, selectedListName: newValue };
         setSelectedMenu(newData);
-        // setEventMenu(selectedMenu)
-
+        setEventListId(e.currentTarget.value)
     };
-    console.log(selectedMenu);
+    const checkedRefresh = () => {
+        setSelectedMenu(initData);
+    };
+
     return (
         <div className={classes.container}>
             <div className={classes.body}>
@@ -66,11 +68,12 @@ const MakedModal = () => {
                 <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
                     {makedMenus.length > 0 &&
                         makedMenus.map((menu) => (
-                            <div key={menu.id} className={"flex"}>
+                            <div key={menu.id} className="flex justify-items-center">
                                 <input
                                     type="checkbox"
-                                    onChange={toggleChecked}
-                                    checked={selectedMenu.singleSelect === menu.id}
+                                    onChange={checkedHandle}
+                                    name={menu.listName}
+                                    checked={selectedName === menu.listName}
                                     value={menu.id}
                                 />
                                 <ListItem className={classes.root}>
@@ -80,8 +83,22 @@ const MakedModal = () => {
                         ))}
                 </div>
                 <div className={classes.buttonWrapper}>
-                    <button onClick={() => setShowMekedModal(false)}>Cancel</button>
-                    <button>Add</button>
+                    <button
+                        onClick={() => {
+                            checkedRefresh();
+                            setShowMekedModal(false);
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={() => {
+                            setEventListName(selectedName);
+                            setShowMekedModal(false);
+                        }}
+                    >
+                        Add
+                    </button>
                 </div>
             </div>
         </div>
