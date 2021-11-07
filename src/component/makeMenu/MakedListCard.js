@@ -8,15 +8,8 @@ import { ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { borderColor } from "@mui/system";
 
-const useStyles = makeStyles(() => ({
-    list: {
-        marginBottom: "3",
-        borderBottom: "1px solid black",
-    },
-}));
 
 const MakedListCard = (props) => {
-    const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const propsMenus = props.menu.menus;
     const newPropsMenus = Object.values(propsMenus[0]);
@@ -38,10 +31,11 @@ const MakedListCard = (props) => {
             >{`${list[2]} ${list[3]}kg ${list[4]}rep `}</Typography>
         );
     });
+    console.log(props)
 
     return (
         <>
-            <div>
+            <div >
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMore />}

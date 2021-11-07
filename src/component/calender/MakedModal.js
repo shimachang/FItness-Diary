@@ -44,7 +44,7 @@ const MakedModal = () => {
     const makedFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
             const makedData = await Api.getMyMenuList(currentUser.currentUser.uid);
-            await setMakedMenus(makedData);
+            setMakedMenus(makedData);
         }
     };
 

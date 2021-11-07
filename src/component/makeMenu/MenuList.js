@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
+import SelectLabel from "./SelectLabel";
 import {
     ListItem,
     ListItemText,
@@ -12,6 +13,7 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core";
+import { MenuContext } from "../../context/MenuContext";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -32,6 +34,7 @@ const MenuList = (props) => {
 
     const [listName, setListName] = useState("");
     const currentUser = useContext(AuthContext);
+    const {addLabel} = useContext(MenuContext)
     const propsMenus = props.menus;
     const myMenuList = propsMenus.map((e) => [e.target, e.category, e.menu, e.weight, e.rep]);
     const newMyMenuList = (arr) => {
@@ -46,7 +49,8 @@ const MenuList = (props) => {
             Api.addMyMenuList(
                 listName,
                 dig(currentUser, "currentUser", "uid"),
-                newMyMenuList(myMenuList)
+                newMyMenuList(myMenuList),
+                addLabel
             );
         }
     };
@@ -56,10 +60,6 @@ const MenuList = (props) => {
         props.fetch();
     };
 
-    // const checkHandle = async (id) => {
-    //     await Api.toggleComplete(id);
-    //     props.fetch();
-    // };
     const menuList = propsMenus.map((menu) => {
         return (
             <ListItem key={menu.id}>
@@ -83,6 +83,7 @@ const MenuList = (props) => {
             <div className={classes.root}>
                 <h2>あなたの筋トレメニュー</h2>
                 <div className="text-center mb-10">
+                <SelectLabel />
                     <TextField
                         id="standard-basic"
                         label="Add List Name"

@@ -1,5 +1,26 @@
 import { db, firebaseTimeStamp } from "./index";
 
+
+export const getInitCalenderEvents = async (uid) => {
+    const events = await db.collection("users").doc(uid).collection("Events");
+
+    return events.get().then((snapshot) => {
+        let eventsList = [];
+        snapshot.forEach((doc) => {
+            eventsList.push({
+                day: doc.data().day,
+                listName: doc.data().listName,
+                listId: doc.data().listId,
+                uid: doc.data().uid,
+                id: doc.data().id,
+                label: doc.data().label,
+                
+            });
+        });
+        return eventsList;
+    });
+};
+
 export const getTemporaryList = async (uid) => {
     const menu = await db.collection("users").doc(uid).collection("Temporary_storage");
 
@@ -30,6 +51,8 @@ export const getMyMenuList = async (uid) => {
                 uid: doc.data().uid,
                 id: doc.data().id,
                 menus: [doc.data().menus],
+                label: doc.data().label
+                
             });
         });
         return menuLists;
@@ -61,7 +84,7 @@ export const addTemporaryMenuList = (
     addCategory,
     addMenu,
     addWeight,
-    addRep
+    addRep,
 ) => {
     const collection = db.collection("users").doc(currentUser).collection("Temporary_storage");
     const newDoc = collection.doc().id;
@@ -77,7 +100,7 @@ export const addTemporaryMenuList = (
     });
 };
 
-export const addMyMenuList = (listName, currentUser, menus) => {
+export const addMyMenuList = (listName, currentUser, menus, label) => {
     const collection = db.collection("users").doc(currentUser).collection("MyMenuList");
     const newDoc = collection.doc().id;
     collection.doc(newDoc).set({
@@ -86,10 +109,11 @@ export const addMyMenuList = (listName, currentUser, menus) => {
         menus: menus,
         created_at: firebaseTimeStamp,
         id: newDoc,
+        label: label
     });
 };
 
-export const addEvents = (listName, listId, currentUser, day) => {
+export const addEvents = (listName, listId, currentUser, day, label) => {
     const collection = db.collection("users").doc(currentUser).collection("Events");
     const newDoc = collection.doc().id;
     collection.doc(newDoc).set({
@@ -98,6 +122,8 @@ export const addEvents = (listName, listId, currentUser, day) => {
         uid: currentUser,
         created_at: firebaseTimeStamp,
         eventId: newDoc,
-        day: day
+        day: day,
+        label: label
+        
     });
 };

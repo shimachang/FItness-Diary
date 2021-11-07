@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import MakeMenuCard from "./MakeMenuCard";
 import { useContext, useState } from "react";
 import { MenuContext } from "../../context/MenuContext";
+import SelectLabel from "./SelectLabel";
 import * as Api from "../../firebase/api";
 import { AuthContext } from "../../context/AuthContext";
 import dig from "object-dig";
@@ -29,7 +30,7 @@ const MakeMenuList = (props) => {
                 addCategory,
                 addMenu,
                 addWeight,
-                addRep
+                addRep,
             );
             setAddTarget("");
             setAddCategory("");

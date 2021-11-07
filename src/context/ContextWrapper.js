@@ -1,6 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState , useContext} from "react";
 import GlobalContext from "./GlobalContext";
+import { AuthContext } from "./AuthContext";
 import dayjs from "dayjs";
+import * as Api from '../firebase/api'
 
 const savedEventsReducer = (state, { type, payload }) => {
     switch (type) {
@@ -15,25 +17,15 @@ const savedEventsReducer = (state, { type, payload }) => {
     }
 };
 
-const initEvents = () => {
-    const storageEvents = localStorage.getItem("savedEvents");
-    const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
-    return parsedEvents;
-};
-
 const ContextWrapper = (props) => {
     const [monthIndex, setMonthIndex] = useState(dayjs().month());
     const [smallCalenderMonth, setSmallCalenderMonth] = useState(null);
     const [daySelected, setDaySelected] = useState(dayjs());
     const [showEventModal, setShowEventModal] = useState(false);
     const [showMakedModal, setShowMekedModal] = useState(false);
-    const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, [], initEvents);
+    const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, []);
     const [eventListName, setEventListName] = useState('') 
     const [eventListId, setEventListId] = useState('') 
-
-    useEffect(() => {
-        localStorage.setItem('savedEvents', JSON.stringify(savedEvents))
-    }, [savedEvents])
 
     useEffect(() => {
         if (smallCalenderMonth !== null) {
