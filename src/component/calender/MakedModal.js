@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const MakedModal = () => {
     const classes = useStyles();
-    const { setShowMekedModal, setEventListName, setEventListId } = useContext(GlobalContext);
+    const { setShowMekedModal, setEventListName, setEventListId, setEventLabel } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const [makedMenus, setMakedMenus] = useState([]);
 
@@ -56,6 +56,7 @@ const MakedModal = () => {
         const newData = { ...selectedMenu, selectedListName: newValue };
         setSelectedMenu(newData);
         setEventListId(e.currentTarget.value)
+        setEventLabel(e.currentTarget.dataset.label)
     };
     const checkedRefresh = () => {
         setSelectedMenu(initData);
@@ -73,9 +74,11 @@ const MakedModal = () => {
                                     type="checkbox"
                                     onChange={checkedHandle}
                                     name={menu.listName}
+                                    data-label={menu.label}
                                     checked={selectedName === menu.listName}
                                     value={menu.id}
                                 />
+                                <div>{menu.label}</div>
                                 <ListItem className={classes.root}>
                                     <MakedListCard menu={menu} />
                                 </ListItem>
@@ -93,6 +96,7 @@ const MakedModal = () => {
                     </button>
                     <button
                         onClick={() => {
+                            // setEventLabel()
                             setEventListName(selectedName);
                             setShowMekedModal(false);
                         }}

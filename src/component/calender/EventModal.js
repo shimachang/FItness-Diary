@@ -1,24 +1,21 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import { AuthContext } from "../../context/AuthContext";
-import { saveEvents } from "../../assets/saveEvents";
-import { db, firebaseTimeStamp } from "../../firebase";
 import * as Api from "../../firebase/api";
 import dig from "object-dig";
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
 
-const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 const EventModal = () => {
     const {
         setShowEventModal,
         setShowMekedModal,
         daySelected,
-        dispatchCalEvent,
         eventListId,
         eventListName,
+        eventLabel,
     } = useContext(GlobalContext);
-    console.log(eventListId);
     const currentUser = useContext(AuthContext);
+
     const openMakedListModal = (e) => {
         setShowMekedModal(e);
     };
@@ -29,15 +26,14 @@ const EventModal = () => {
                 eventListName,
                 eventListId,
                 dig(currentUser, "currentUser", "uid"),
-                daySelected.valueOf()
+                daySelected.valueOf(),
+                eventLabel
             );
         }
-        // dispatchCalEvent({ type: "push", payload: calenderEvent });
         setShowEventModal(false);
     };
-    console.log(daySelected.valueOf());
+
     const [description, setDescription] = useState("");
-    const [selectedLabel, seteSelectedLabel] = useState(labelsClasses[0]);
 
     return (
         <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
@@ -64,24 +60,6 @@ const EventModal = () => {
                             className="pt-3 border-0 text-gray-600 pd-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                             onChange={(e) => setDescription(e.target.value)}
                         />
-                        {/* <span className="material-icons-outlined text-gray-400">
-                            bookmark_border
-                        </span>
-                        <div className="flex gap-x-2">
-                            {labelsClasses.map((labelClass, i) => (
-                                <span
-                                    onClick={() => seteSelectedLabel(labelClass)}
-                                    key={i}
-                                    className={`bg-${labelClass}-500 w-6 h-6 rounded-full flex items-center justify-center`}
-                                >
-                                    {selectedLabel === labelClass && (
-                                        <span className="material-icons-outlined text-white ">
-                                            check
-                                        </span>
-                                    )}
-                                </span>
-                            ))}
-                        </div> */}
                     </div>
                 </div>
                 <footer className="flex justify-end  border-t p-3 mt-5">

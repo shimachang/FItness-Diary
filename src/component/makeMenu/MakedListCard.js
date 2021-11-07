@@ -1,12 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState} from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { ExpandMore } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core";
-import { borderColor } from "@mui/system";
 
 
 const MakedListCard = (props) => {
@@ -31,7 +28,6 @@ const MakedListCard = (props) => {
             >{`${list[2]} ${list[3]}kg ${list[4]}rep `}</Typography>
         );
     });
-    console.log(props)
 
     return (
         <>

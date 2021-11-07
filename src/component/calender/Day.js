@@ -6,8 +6,7 @@ import * as Api from "../../firebase/api";
 import dig from "object-dig";
 
 const Day = ({ day, rowIdx }) => {
-    const { setDaySelected, setShowEventModal, daySelected } =
-        useContext(GlobalContext);
+    const { setDaySelected, daySelected } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const [dayEvents, setDayEvents] = useState([]);
     useEffect(() => {
@@ -51,11 +50,12 @@ const Day = ({ day, rowIdx }) => {
                 className={`flex-1 cursor-pointer `}
                 onClick={() => {
                     setDaySelected(day);
-                    // setShowEventModal(true);
                 }}
             >
                 {dayEvents.map((e, id) => (
-                    <div className={`bg-${e.label}`} key={id}>{e.listName}</div>
+                    <div className={`bg-${e.label}-200`} key={id}>
+                        {e.listName}
+                    </div>
                 ))}
             </div>
         </div>

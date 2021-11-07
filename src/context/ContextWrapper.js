@@ -26,6 +26,8 @@ const ContextWrapper = (props) => {
     const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, []);
     const [eventListName, setEventListName] = useState('') 
     const [eventListId, setEventListId] = useState('') 
+    const [eventLabel, setEventLabel] = useState("");
+
 
     useEffect(() => {
         if (smallCalenderMonth !== null) {
@@ -50,7 +52,9 @@ const ContextWrapper = (props) => {
                 eventListName,
                 setEventListName,
                 eventListId,
-                setEventListId
+                setEventListId,
+                eventLabel,
+                setEventLabel
             }}
         >
             {props.children}
