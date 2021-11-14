@@ -6,12 +6,25 @@ import * as Api from "../../firebase/api";
 import dig from "object-dig";
 
 const Day = ({ day, rowIdx }) => {
-    const { setDaySelected, daySelected } = useContext(GlobalContext);
+    const {
+        setDaySelected,
+        daySelected,
+        setEventId,
+        setEventListId,
+        setEventListName,
+        setEventLabel,
+        setEventDescription,
+        setEventCreated,
+        showEventModal,
+        showEventUpdateModal,
+        setShowEventUpdateModal,
+    } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const [dayEvents, setDayEvents] = useState([]);
+
     useEffect(() => {
         eventsFetch();
-    }, [currentUser, day]);
+    }, [currentUser, day, showEventModal, showEventUpdateModal]);
 
     const eventsFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
@@ -22,11 +35,13 @@ const Day = ({ day, rowIdx }) => {
             setDayEvents(filterEvents);
         }
     };
+
     const getCurrentDayClass = () => {
         return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
             ? "bg-blue-600 text-white rounded-full w-7"
             : "";
     };
+
     const getDayClass = (day) => {
         const format = "DD-MM-YY";
         const nowDay = dayjs().format(format);
@@ -38,22 +53,40 @@ const Day = ({ day, rowIdx }) => {
             return "";
         }
     };
+
+    const getCurrentDayEvent = () => {
+        
+    }
+    console.log(dayEvents)
+
     return (
-        <div className={`border border-gray-200 flex flex-col ${getDayClass(day)}`}>
+        <div
+            onClick={() => {
+                setDaySelected(day);
+            }}
+            className={`border border-gray-200 flex flex-col ${getDayClass(day)}`}
+        >
             <header className="flex felx-col items-center">
                 {rowIdx === 0 && <p className="text-sm mt-1">{day.format("dd")}</p>}
                 <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}>
                     {day.format("DD")}
                 </p>
             </header>
-            <div
-                className={`flex-1 cursor-pointer `}
-                onClick={() => {
-                    setDaySelected(day);
-                }}
-            >
-                {dayEvents.map((e, id) => (
-                    <div className={`bg-${e.label}-200`} key={id}>
+            <div className={`flex-1`}>
+                {dayEvents.map((e) => (
+                    <div
+                        onClick={() => {
+                            setShowEventUpdateModal(true);
+                            setEventListId(e.listId);
+                            setEventListName(e.listName);
+                            setEventLabel(e.label);
+                            setEventId(e.eventId);
+                            setEventDescription(e.description);
+                            setEventCreated(e.created_at);
+                        }}
+                        className={`bg-${e.label}-200 text-gray-600 text-sm mb-1 cursor-pointer`}
+                        key={e.eventId}
+                    >
                         {e.listName}
                     </div>
                 ))}

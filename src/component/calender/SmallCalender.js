@@ -10,7 +10,8 @@ const SmallCalender = () => {
         setCurrentMonth(getMonth(currentMonthIndex));
     }, [currentMonthIndex]);
 
-    const { monthIndex, setSmallCalenderMonth, setDaySelected, daySelected } = useContext(GlobalContext);
+    const { monthIndex, setSmallCalenderMonth, setDaySelected, daySelected, setShowSmallCalender } =
+        useContext(GlobalContext);
 
     useEffect(() => {
         setCurrentMonthIndex(monthIndex);
@@ -36,42 +37,55 @@ const SmallCalender = () => {
         }
     };
     return (
-        <div className="mt-9">
-            <header className="flex justify-between">
-                <p className="text-gray-500 font-bold">
-                    {dayjs(new Date(dayjs().year(), currentMonthIndex)).format("YYYY年 MMMM ")}
-                </p>
-                <div>
-                    <button onClick={handlePrevMonth}>
-                        <span className="material-icons-outlined corsor-pointer text-gray-600 mx-2">chevron_left</span>
-                    </button>
-                    <button onClick={handleNextMonth}>
-                        <span className="material-icons-outlined corsor-pointer text-gray-600 mx-2">chevron_right</span>
-                    </button>
-                </div>
-            </header>
-            <div className="grid grid-cols-7 grid-rows-7">
-                {currentMonth[0].map((day, i) => (
-                    <span key={i} className="text-sm py-1 text-center">
-                        {day.format("dd")}
-                    </span>
-                ))}
-                {currentMonth.map((row, i) => (
-                    <React.Fragment key={i}>
-                        {row.map((day, id) => (
-                            <button 
-                                onClick={() => {
-                                    setSmallCalenderMonth(currentMonthIndex);
-                                    setDaySelected(day);
-                                }}
-                                key={id}
-                                className={`py-1 w-full ${getDayClass(day)}`}
-                            >
-                                <span className="text-sm">{day.format("D")}</span>
+        <div className="h-screen w-screen absolute left-0 top-0">
+            <div className="w-full h-full absolute bg-black bg-opacity-80 flex justify-center items-center">
+                <div className="relative w-5/6 h-1/2 bg-white mx-auto p-6">
+                    <header className="flex justify-between ">
+                        <p className="text-gray-500 font-bold">
+                            {dayjs(new Date(dayjs().year(), currentMonthIndex)).format(
+                                "YYYY年 MMMM "
+                            )}
+                        </p>
+                        <div>
+                            <button onClick={handlePrevMonth}>
+                                <span className="material-icons-outlined corsor-pointer text-gray-600 mx-2">
+                                    chevron_left
+                                </span>
                             </button>
+                            <button onClick={handleNextMonth}>
+                                <span className="material-icons-outlined corsor-pointer text-gray-600 mx-2">
+                                    chevron_right
+                                </span>
+                            </button>
+                            <button onClick={() => setShowSmallCalender(false)}>
+                                <span className="material-icons-outlined text-gray-400">close</span>
+                            </button>
+                        </div>
+                    </header>
+                    <div className="grid grid-cols-7 grid-rows-7">
+                        {currentMonth[0].map((day, i) => (
+                            <span key={i} className="text-sm py-1 text-center">
+                                {day.format("dd")}
+                            </span>
                         ))}
-                    </React.Fragment>
-                ))}
+                        {currentMonth.map((row, i) => (
+                            <React.Fragment key={i}>
+                                {row.map((day, id) => (
+                                    <button
+                                        onClick={() => {
+                                            setSmallCalenderMonth(currentMonthIndex);
+                                            setDaySelected(day);
+                                        }}
+                                        key={id}
+                                        className={`py-1 w-full ${getDayClass(day)}`}
+                                    >
+                                        <span className="text-sm">{day.format("D")}</span>
+                                    </button>
+                                ))}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

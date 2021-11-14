@@ -7,7 +7,7 @@ import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
-import {LabelImportantIcon} from '@material-ui/core';
+import { LabelImportantIcon } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -45,10 +45,12 @@ const MakedList = () => {
             <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
                 {makedMenus.length > 0 &&
                     makedMenus.map((menu) => (
-                        <div  key={menu.id}>
+                        <div key={menu.id}>
                             <ListItem className={classes.root}>
                                 <MakedListCard menu={menu} />
-                                <span className={` material-icons text-${menu.label}-600 `}>label</span>
+                                <span className={` material-icons text-${menu.label}-600 `}>
+                                    label
+                                </span>
                                 <IconButton
                                     edge="end"
                                     aria-label="delete"

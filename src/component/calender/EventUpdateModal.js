@@ -1,30 +1,34 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
 import dig from "object-dig";
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
 
-const EventModal = () => {
+const EventUpdateModal = () => {
     const {
-        setShowEventModal,
+        setShowEventUpdateModal,
         setShowMekedModal,
         setShowSmallCalender,
+        setEventDescription,
         daySelected,
+        eventCreated,
+        eventId,
         eventListId,
         eventListName,
         eventLabel,
         eventDescription,
-        setEventDescription,
     } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const openMakedListModal = (e) => {
         setShowMekedModal(e);
     };
-    const saveEventSubmit = (e) => {
+    const updateEventSubmit = (e) => {
         e.preventDefault();
         if (eventListId) {
-            Api.addEvents(
+            Api.updateEvents(
+                eventCreated,
+                eventId,
                 eventListName,
                 eventListId,
                 dig(currentUser, "currentUser", "uid"),
@@ -33,7 +37,11 @@ const EventModal = () => {
                 eventLabel
             );
         }
-        setShowEventModal(false);
+        setShowEventUpdateModal(false);
+    };
+    const deleteSubmit = (uid, id) => {
+        Api.deleteEvent(uid, id);
+        setShowEventUpdateModal(false);
     };
 
     return (
@@ -41,12 +49,21 @@ const EventModal = () => {
             <div className="w-full h-full absolute bg-black bg-opacity-80 flex justify-center items-center">
                 <div className="relative max-w-lg w-5/6 h-1/2 bg-white mx-auto p-6">
                     <form className="bg-white rounded-lg shadow-2xl">
-                        <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                        <header className="w-full bg-gray-100 px-4 py-2 flex justify-between items-center">
                             <span className="material-icons-outlined text-gray-400">
                                 drag_handle
                             </span>
-                            <span>New Event</span>
-                            <button onClick={() => setShowEventModal(false)}>
+                            <span>Update Event</span>
+                            <button
+                                onClick={() =>
+                                    deleteSubmit(dig(currentUser, "currentUser", "uid"), eventId)
+                                }
+                            >
+                                <span className="material-icons-outlined text-gray-400">
+                                    delete
+                                </span>
+                            </button>
+                            <button onClick={() => setShowEventUpdateModal(false)}>
                                 <span className="material-icons-outlined text-gray-400">close</span>
                             </button>
                         </header>
@@ -56,7 +73,7 @@ const EventModal = () => {
                                     <AddCircleOutlineOutlined
                                         onClick={() => openMakedListModal(true)}
                                     />
-                                </div>
+                                </div>{" "}
                                 <div>{eventListName ? eventListName : "add a menu"}</div>
                                 <span
                                     className="material-icons-outlined text-gray-400"
@@ -82,7 +99,7 @@ const EventModal = () => {
                         <footer className="flex justify-end  border-t p-3 mt-5">
                             <button
                                 type="submit"
-                                onClick={saveEventSubmit}
+                                onClick={updateEventSubmit}
                                 className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
                             >
                                 Save
@@ -94,5 +111,4 @@ const EventModal = () => {
         </div>
     );
 };
-
-export default EventModal;
+export default EventUpdateModal;

@@ -1,15 +1,13 @@
-import React, { useEffect, useReducer, useState , useContext} from "react";
+import React, { useReducer, useState } from "react";
 import GlobalContext from "./GlobalContext";
-import { AuthContext } from "./AuthContext";
 import dayjs from "dayjs";
-import * as Api from '../firebase/api'
 
 const savedEventsReducer = (state, { type, payload }) => {
     switch (type) {
         case "push":
             return [...state, payload];
         case "update":
-            return state.map((e) => e.id === payload.id ? payload : e);
+            return state.map((e) => (e.id === payload.id ? payload : e));
         case "delete":
             return state.filter((e) => e.id !== payload.id);
         default:
@@ -23,17 +21,17 @@ const ContextWrapper = (props) => {
     const [daySelected, setDaySelected] = useState(dayjs());
     const [showEventModal, setShowEventModal] = useState(false);
     const [showMakedModal, setShowMekedModal] = useState(false);
+    const [showEventUpdateModal, setShowEventUpdateModal] = useState(false);
+    const [showSmallCalender, setShowSmallCalender] = useState(false);
     const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, []);
-    const [eventListName, setEventListName] = useState('') 
-    const [eventListId, setEventListId] = useState('') 
+    const [eventId, setEventId] = useState("");
+    const [eventListName, setEventListName] = useState("");
+    const [eventListId, setEventListId] = useState("");
     const [eventLabel, setEventLabel] = useState("");
+    const [eventDescription, setEventDescription] = useState("");
+    const [eventCreated, setEventCreated] = useState("");
+    const [curretnDayEvent, setCurrentDayEvent] = useState([]);
 
-
-    useEffect(() => {
-        if (smallCalenderMonth !== null) {
-            setMonthIndex(smallCalenderMonth);
-        }
-    }, [smallCalenderMonth]);
     return (
         <GlobalContext.Provider
             value={{
@@ -47,14 +45,26 @@ const ContextWrapper = (props) => {
                 setShowEventModal,
                 showMakedModal,
                 setShowMekedModal,
+                showEventUpdateModal,
+                setShowEventUpdateModal,
+                showSmallCalender,
+                setShowSmallCalender,
                 dispatchCalEvent,
                 savedEvents,
+                eventId,
+                setEventId,
                 eventListName,
                 setEventListName,
                 eventListId,
                 setEventListId,
                 eventLabel,
-                setEventLabel
+                setEventLabel,
+                eventDescription,
+                setEventDescription,
+                eventCreated,
+                setEventCreated,
+                curretnDayEvent,
+                setCurrentDayEvent,
             }}
         >
             {props.children}

@@ -1,40 +1,42 @@
 import { db, firebaseTimeStamp } from "./index";
 
-
 export const getInitCalenderEvents = async (uid) => {
     const events = await db.collection("users").doc(uid).collection("Events");
 
     return events.get().then((snapshot) => {
-        let eventsList = [];
+        let eventLists = [];
         snapshot.forEach((doc) => {
-            eventsList.push({
-                day: doc.data().day,
-                listName: doc.data().listName,
-                listId: doc.data().listId,
-                uid: doc.data().uid,
-                id: doc.data().id,
-                label: doc.data().label,
-                
+            const data = doc.data()
+            eventLists.push({
+                day: data.day,
+                description: data.description,
+                listName: data.listName,
+                listId: data.listId,
+                uid: data.uid,
+                eventId: data.eventId,
+                label: data.label,
+                created_at: data.created_at,
             });
         });
-        return eventsList;
+        return eventLists;
     });
 };
 
 export const getTemporaryList = async (uid) => {
-    const menu = await db.collection("users").doc(uid).collection("Temporary_storage");
+    const temporary = await db.collection("users").doc(uid).collection("Temporary_storage");
 
-    return menu.get().then((snapshot) => {
+    return temporary.get().then((snapshot) => {
         let menuLists = [];
         snapshot.forEach((doc) => {
+            const data = doc.data()
             menuLists.push({
-                target: doc.data().target,
-                category: doc.data().category,
-                menu: doc.data().menu,
-                weight: doc.data().weight,
-                rep: doc.data().rep,
-                uid: doc.data().uid,
-                id: doc.data().id,
+                target: data.target,
+                category: data.category,
+                menu: data.menu,
+                weight: data.weight,
+                rep: data.rep,
+                uid: data.uid,
+                id: data.id,
             });
         });
         return menuLists;
@@ -46,13 +48,13 @@ export const getMyMenuList = async (uid) => {
     return menu.get().then((snapshot) => {
         let menuLists = [];
         snapshot.forEach((doc) => {
+            const data = doc.data()
             menuLists.push({
-                listName: doc.data().listName,
-                uid: doc.data().uid,
-                id: doc.data().id,
-                menus: [doc.data().menus],
-                label: doc.data().label
-                
+                listName: data.listName,
+                uid: data.uid,
+                id: data.id,
+                menus: [data.menus],
+                label: data.label,
             });
         });
         return menuLists;
@@ -65,6 +67,10 @@ export const deleteTemporary = (uid, id) => {
 
 export const deleteMyMenuList = (uid, id) => {
     db.collection("users").doc(uid).collection("MyMenuList").doc(id).delete();
+};
+
+export const deleteEvent = (uid, id) => {
+    db.collection("users").doc(uid).collection("Events").doc(id).delete();
 };
 
 export const toggleComplete = async (id) => {
@@ -84,7 +90,7 @@ export const addTemporaryMenuList = (
     addCategory,
     addMenu,
     addWeight,
-    addRep,
+    addRep
 ) => {
     const collection = db.collection("users").doc(currentUser).collection("Temporary_storage");
     const newDoc = collection.doc().id;
@@ -109,21 +115,49 @@ export const addMyMenuList = (listName, currentUser, menus, label) => {
         menus: menus,
         created_at: firebaseTimeStamp,
         id: newDoc,
-        label: label
+        label: label,
     });
 };
 
-export const addEvents = (listName, listId, currentUser, day, label) => {
+export const addEvents = (listName, listId, currentUser, day, description, label) => {
     const collection = db.collection("users").doc(currentUser).collection("Events");
     const newDoc = collection.doc().id;
     collection.doc(newDoc).set({
+        created_at: firebaseTimeStamp,
         listName: listName,
         listId: listId,
         uid: currentUser,
-        created_at: firebaseTimeStamp,
+        updated_at: firebaseTimeStamp,
         eventId: newDoc,
         day: day,
-        label: label
-        
+        description: description,
+        label: label,
     });
+};
+
+export const updateEvents = (
+    eventCreated,
+    eventId,
+    listName,
+    listId,
+    currentUser,
+    day,
+    description,
+    label
+) => {
+    const collection = db.collection("users").doc(currentUser).collection("Events");
+    collection.doc(eventId).set(
+        {
+            created_at: eventCreated,
+            eventId: eventId,
+            listName: listName,
+            listId: listId,
+            uid: currentUser,
+            updated_at: firebaseTimeStamp,
+            day: day,
+            description: description,
+            label: label,
+        },
+        { marge: true }
+    );
 };
