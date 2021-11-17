@@ -18,6 +18,8 @@ const Day = ({ day, rowIdx }) => {
         showEventModal,
         showEventUpdateModal,
         setShowEventUpdateModal,
+        currentDayEvent,
+        setCurrentDayEvent,
     } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const [dayEvents, setDayEvents] = useState([]);
@@ -26,25 +28,23 @@ const Day = ({ day, rowIdx }) => {
         eventsFetch();
     }, [currentUser, day, showEventModal, showEventUpdateModal]);
 
+    const format = "DD-MM-YY";
     const eventsFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
             const eventsFetch = await Api.getInitCalenderEvents(currentUser.currentUser.uid);
             const filterEvents = eventsFetch.filter(
-                (evt) => dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
+                (evt) => dayjs(evt.day).format(format) === day.format(format)
             );
             setDayEvents(filterEvents);
         }
     };
-
     const getCurrentDayClass = () => {
-        return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+        return day.format(format) === dayjs().format(format)
             ? "bg-blue-600 text-white rounded-full w-7"
             : "";
     };
 
     const getDayClass = (day) => {
-        const format = "DD-MM-YY";
-        const nowDay = dayjs().format(format);
         const currentDay = day.format(format);
         const selectDay = daySelected && daySelected.format(format);
         if (currentDay === selectDay) {
@@ -54,15 +54,15 @@ const Day = ({ day, rowIdx }) => {
         }
     };
 
-    const getCurrentDayEvent = () => {
-        
-    }
-    console.log(dayEvents)
+    const isEvent = () => {
+        dayEvents.length > 0 ? setCurrentDayEvent(dayEvents) : setCurrentDayEvent("");
+    };
 
     return (
         <div
             onClick={() => {
                 setDaySelected(day);
+                isEvent();
             }}
             className={`border border-gray-200 flex flex-col ${getDayClass(day)}`}
         >

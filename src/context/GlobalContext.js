@@ -20,7 +20,7 @@ const GlobalContext = React.createContext({
     setEventLabel: () => {},
     setEventDescription: () => {},
     setEventCreated: () => {},
-    setCurrentDayEvent: (e) => {},
+    setCurrentDayEvent: () => {},
 });
 
 export default GlobalContext;
