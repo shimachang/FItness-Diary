@@ -12,9 +12,9 @@ const SelectedDayEvent = () => {
         setEventDescription,
         setEventCreated,
     } = useContext(GlobalContext);
-    console.log(currentDayEvent);
+    
     return (
-        <div className='pt-4'>
+        <div className="pt-4">
             {currentDayEvent !== "" &&
                 currentDayEvent.map((event) => (
                     <div

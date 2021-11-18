@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useContext, useEffect, useState } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -18,21 +18,19 @@ const Day = ({ day, rowIdx }) => {
         showEventModal,
         showEventUpdateModal,
         setShowEventUpdateModal,
-        currentDayEvent,
         setCurrentDayEvent,
     } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const [dayEvents, setDayEvents] = useState([]);
-
     useEffect(() => {
-        eventsFetch();
+        eventFetch();
     }, [currentUser, day, showEventModal, showEventUpdateModal]);
-
+    
     const format = "DD-MM-YY";
-    const eventsFetch = async () => {
+    const eventFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
-            const eventsFetch = await Api.getInitCalenderEvents(currentUser.currentUser.uid);
-            const filterEvents = eventsFetch.filter(
+            const eventFetch = await Api.getInitCalenderEvents(currentUser.currentUser.uid);
+            const filterEvents = eventFetch.filter(
                 (evt) => dayjs(evt.day).format(format) === day.format(format)
             );
             setDayEvents(filterEvents);
@@ -54,7 +52,7 @@ const Day = ({ day, rowIdx }) => {
         }
     };
 
-    const isEvent = () => {
+    const getEvent = () => {
         dayEvents.length > 0 ? setCurrentDayEvent(dayEvents) : setCurrentDayEvent("");
     };
 
@@ -62,7 +60,7 @@ const Day = ({ day, rowIdx }) => {
         <div
             onClick={() => {
                 setDaySelected(day);
-                isEvent();
+                getEvent();
             }}
             className={`border border-gray-200 flex flex-col ${getDayClass(day)}`}
         >

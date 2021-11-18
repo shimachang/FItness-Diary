@@ -7,7 +7,7 @@ import TodayMenus from "./component/todayMenu/TodayMenus";
 import { useState } from "react";
 
 const App = () => {
-    const [tab, setTab] = useState("calender");
+    const [tab, setTab] = useState("todayMenus");
 
     const Body = () => {
         switch (tab) {

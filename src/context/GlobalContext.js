@@ -21,6 +21,7 @@ const GlobalContext = React.createContext({
     setEventDescription: () => {},
     setEventCreated: () => {},
     setCurrentDayEvent: () => {},
+    setCurrentMonthEvent: () => {},
 });
 
 export default GlobalContext;

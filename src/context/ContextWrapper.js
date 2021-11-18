@@ -31,6 +31,7 @@ const ContextWrapper = (props) => {
     const [eventDescription, setEventDescription] = useState("");
     const [eventCreated, setEventCreated] = useState("");
     const [currentDayEvent, setCurrentDayEvent] = useState("");
+    const [currentMonthEvent, setCurrentMonthEvent] = useState("")
 
     return (
         <GlobalContext.Provider
@@ -65,6 +66,8 @@ const ContextWrapper = (props) => {
                 setEventCreated,
                 currentDayEvent,
                 setCurrentDayEvent,
+                currentMonthEvent,
+                setCurrentMonthEvent
             }}
         >
             {props.children}
