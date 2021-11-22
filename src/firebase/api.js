@@ -43,8 +43,26 @@ export const getTemporaryList = async (uid) => {
     });
 };
 
-export const getMyMenuList = async (uid) => {
+export const getMyMenuLists = async (uid) => {
     const menu = await db.collection("users").doc(uid).collection("MyMenuList");
+    return menu.get().then((snapshot) => {
+        let menuLists = [];
+        snapshot.forEach((doc) => {
+            const data = doc.data()
+            menuLists.push({
+                listName: data.listName,
+                uid: data.uid,
+                listId: data.id,
+                menus: [data.menus],
+                label: data.label,
+            });
+        });
+        return menuLists;
+    });
+};
+
+export const getCurrentMyMenuList = async (uid, listId) => {
+    const menu = await db.collection("users").doc(uid).collection("MyMenuList").doc(listId);
     return menu.get().then((snapshot) => {
         let menuLists = [];
         snapshot.forEach((doc) => {

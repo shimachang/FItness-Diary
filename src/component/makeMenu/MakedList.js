@@ -30,7 +30,7 @@ const MakedList = () => {
 
     const makedFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
-            const makedData = await Api.getMyMenuList(currentUser.currentUser.uid);
+            const makedData = await Api.getMyMenuLists(currentUser.currentUser.uid);
             setMakedMenus(makedData);
         }
     };
@@ -45,7 +45,7 @@ const MakedList = () => {
             <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
                 {makedMenus.length > 0 &&
                     makedMenus.map((menu) => (
-                        <div key={menu.id}>
+                        <div key={menu.listId}>
                             <ListItem className={classes.root}>
                                 <MakedListCard menu={menu} />
                                 <span className={` material-icons text-${menu.label}-600 `}>
@@ -54,7 +54,7 @@ const MakedList = () => {
                                 <IconButton
                                     edge="end"
                                     aria-label="delete"
-                                    onClick={() => deleteHandle(menu.uid, menu.id)}
+                                    onClick={() => deleteHandle(menu.uid, menu.listId)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>

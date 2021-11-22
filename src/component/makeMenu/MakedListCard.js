@@ -1,10 +1,9 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { ExpandMore } from "@material-ui/icons";
-
 
 const MakedListCard = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -30,20 +29,18 @@ const MakedListCard = (props) => {
     });
 
     return (
-        <>
-            <div >
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMore />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography>{props.menu.listName}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>{MenuList}</AccordionDetails>
-                </Accordion>
-            </div>
-        </>
+        <div>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMore />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography>{props.menu.listName}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>{MenuList}</AccordionDetails>
+            </Accordion>
+        </div>
     );
 };
 export default MakedListCard;
