@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
-import * as Api from "../../firebase/api";
-import MenuList from "./MenuList";
-import { makeStyles } from "@material-ui/core";
-import MakeMenuList from "./MakeMenuList";
+import GlobalContext from "../../context/GlobalContext";
 import MenuProvider from "../../context/MenuContext";
+import * as Api from "../../firebase/api";
+import { makeStyles } from "@material-ui/core";
+import MenuList from "./MenuList";
+import MakeMenuList from "./MakeMenuList";
 import MakedList from "./MakedList";
+import MakeMenuModal from "./MakeMenuModal";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -31,7 +33,8 @@ const MakeMenu = () => {
     const classes = useStyles();
     const currentUser = useContext(AuthContext);
     const [menus, setMenus] = useState([]);
-    
+    const { showMakeMenuModal } = useContext(GlobalContext);
+
     useEffect(() => {
         fetch();
     }, [currentUser]);
@@ -48,10 +51,7 @@ const MakeMenu = () => {
         <>
             <MenuProvider>
                 <MakedList />
-                <MakeMenuList fetch={fetch} />
-                <div className={classes.root}>
-                    <MenuList menus={menus} fetch={fetch} />
-                </div>
+                {showMakeMenuModal && <MakeMenuModal menus={menus} fetch={fetch} />}
             </MenuProvider>
         </>
     );

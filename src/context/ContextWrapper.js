@@ -23,6 +23,7 @@ const ContextWrapper = (props) => {
     const [showMakedModal, setShowMekedModal] = useState(false);
     const [showEventUpdateModal, setShowEventUpdateModal] = useState(false);
     const [showSmallCalender, setShowSmallCalender] = useState(false);
+    const [showMakeMenuModal, setShowMakeMenuModal] = useState(false);
     const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, []);
     const [eventId, setEventId] = useState("");
     const [eventListName, setEventListName] = useState("");
@@ -50,6 +51,8 @@ const ContextWrapper = (props) => {
                 setShowEventUpdateModal,
                 showSmallCalender,
                 setShowSmallCalender,
+                showMakeMenuModal,
+                setShowMakeMenuModal,
                 dispatchCalEvent,
                 savedEvents,
                 eventId,

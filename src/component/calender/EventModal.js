@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";

@@ -179,3 +179,31 @@ export const updateEvents = (
         { marge: true }
     );
 };
+
+export const updateMyMenuList = (
+    eventCreated,
+    eventId,
+    listName,
+    listId,
+    currentUser,
+    day,
+    description,
+    label
+) => {
+    const collection = db.collection("users").doc(currentUser).collection("Events");
+    collection.doc(eventId).set(
+        {
+            created_at: eventCreated,
+            eventId: eventId,
+            listName: listName,
+            listId: listId,
+            uid: currentUser,
+            updated_at: firebaseTimeStamp,
+            day: day,
+            description: description,
+            label: label,
+        },
+        { marge: true }
+    );
+};
+

@@ -4,22 +4,24 @@ import { AuthProvider } from "./context/AuthContext";
 import MakeMenu from "./component/makeMenu/MakeMenu";
 import Footer from "./component/global/Footer";
 import TodayMenus from "./component/todayMenu/TodayMenus";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import MakeMenuModal from "./component/makeMenu/MakeMenuModal";
+import GlobalContext from "./context/GlobalContext";
 
 const App = () => {
     const [tab, setTab] = useState("todayMenus");
-
+    
     const Body = () => {
         switch (tab) {
             case "todayMenus":
                 return <TodayMenus />;
                 break;
             case "calender":
-                return <Calender />
+                return <Calender />;
                 break;
             case "makeMenu":
-                return <MakeMenu />
-                break
+                return <MakeMenu />;
+                break;
         }
     };
 
@@ -27,6 +29,7 @@ const App = () => {
         <AuthProvider>
             <Header setTab={setTab} />
             <Body />
+            
             {/* <Footer /> */}
         </AuthProvider>
     );
