@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 const MakedList = () => {
     const classes = useStyles();
     const currentUser = useContext(AuthContext);
-    const {setShowMakeMenuModal} = useContext(GlobalContext)
+    const { setShowMakeMenuModal } = useContext(GlobalContext);
     const [makedMenus, setMakedMenus] = useState([]);
 
     useEffect(() => {
@@ -44,8 +44,17 @@ const MakedList = () => {
 
     return (
         <>
-            <div className="text-center text-xl mt-10 pb-4">
-                My Menu List <AddCircleOutlineOutlined onClick={() => setShowMakeMenuModal(true)} />
+            <div className="text-center text-xl mt-10 mb-4">
+                My Menu List
+                <div className="inline ml-4">
+                    <IconButton
+                        edge="end"
+                        aria-label="delete"
+                        onClick={() => setShowMakeMenuModal(true)}
+                    >
+                        <AddCircleOutlineOutlined />
+                    </IconButton>
+                </div>
             </div>
             <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
                 {makedMenus.length > 0 &&

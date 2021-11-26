@@ -4,36 +4,14 @@ import { AuthContext } from "../../context/AuthContext";
 import GlobalContext from "../../context/GlobalContext";
 import MenuProvider from "../../context/MenuContext";
 import * as Api from "../../firebase/api";
-import { makeStyles } from "@material-ui/core";
-import MenuList from "./MenuList";
-import MakeMenuList from "./MakeMenuList";
+import SelectMenuModal from "./SelectMenuModal";
 import MakedList from "./MakedList";
 import MakeMenuModal from "./MakeMenuModal";
 
-const useStyles = makeStyles(() => ({
-    root: {
-        textAlign: "center",
-        marginTop: 40,
-    },
-    form: {
-        width: "100%",
-        maxWidth: 360,
-        margin: "auto",
-        marginBottom: 40,
-        display: "flex",
-        alignItems: "baseline",
-        justifyContent: "center",
-    },
-    input: {
-        marginRight: 10,
-    },
-}));
-
 const MakeMenu = () => {
-    const classes = useStyles();
     const currentUser = useContext(AuthContext);
     const [menus, setMenus] = useState([]);
-    const { showMakeMenuModal } = useContext(GlobalContext);
+    const { showMakeMenuModal, showSelectMenuModal } = useContext(GlobalContext);
 
     useEffect(() => {
         fetch();
@@ -52,6 +30,7 @@ const MakeMenu = () => {
             <MenuProvider>
                 <MakedList />
                 {showMakeMenuModal && <MakeMenuModal menus={menus} fetch={fetch} />}
+                {showSelectMenuModal && <SelectMenuModal menus={menus} fetch={fetch} />}
             </MenuProvider>
         </>
     );

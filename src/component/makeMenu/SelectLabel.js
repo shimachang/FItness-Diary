@@ -11,9 +11,8 @@ const SelectLabel = () => {
     }, [currentLabel]);
 
     return (
-        <div className='container text-center mx-auto'>
-            <div className="pb-4">Select Label</div>
-            <div className="flex justify-center gap-x-2">
+        <div className="container text-center mx-auto">
+            <div className="mt-5 flex justify-center gap-x-2">
                 {labelsClasses.map((labelClass, i) => (
                     <span
                         onClick={() => setCurrentLabel(labelClass)}

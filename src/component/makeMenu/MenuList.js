@@ -11,31 +11,17 @@ import {
     Button,
     TextField,
 } from "@material-ui/core";
+import { AddCircleOutlineOutlined } from "@material-ui/icons";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core";
 import { MenuContext } from "../../context/MenuContext";
-
-
-const useStyles = makeStyles(() => ({
-    root: {
-        maxWidth: 360,
-        margin: "auto",
-    },
-    list: {
-        justifyContent: "space-between",
-    },
-    ul: {
-        paddingLeft: 0,
-        listStyle: "none",
-    },
-}));
+import GlobalContext from "../../context/GlobalContext";
 
 const MenuList = (props) => {
-    const classes = useStyles();
-
     const [listName, setListName] = useState("");
     const currentUser = useContext(AuthContext);
-    const {addLabel} = useContext(MenuContext)
+    const { addLabel } = useContext(MenuContext);
+    const { setShowSelectMenuModal} = useContext(GlobalContext)
     const propsMenus = props.menus;
     const myMenuList = propsMenus.map((e) => [e.target, e.category, e.menu, e.weight, e.rep]);
     const newMyMenuList = (arr) => {
@@ -63,6 +49,8 @@ const MenuList = (props) => {
 
     const menuList = propsMenus.map((menu) => {
         return (
+            <div className='bg-green-50'>
+
             <ListItem key={menu.id}>
                 <ListItemText primary={menu.menu} />
                 <ListItemText primary={menu.weight} />
@@ -77,14 +65,14 @@ const MenuList = (props) => {
                     </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
+            </div>
         );
     });
+
     return (
         <>
-            <div className={classes.root}>
-                <h2>あなたの筋トレメニュー</h2>
-                <div className="text-center mb-10">
-                <SelectLabel />
+            <div className="mx-auto mt-6 max-w-sm">
+                <div className="text-center mb-7">
                     <TextField
                         id="standard-basic"
                         label="Add List Name"
@@ -92,10 +80,12 @@ const MenuList = (props) => {
                         autoComplete="off"
                         onChange={(e) => setListName(e.target.value)}
                     />
+                    <SelectLabel />
                 </div>
-                <ul className={classes.ul}>{menuList}</ul>
+                <div className='text-center mb-4'>Add New Menu <AddCircleOutlineOutlined onClick={() => setShowSelectMenuModal(true)} /></div>
+                <ul className="pl-0 list-none overflow-scroll max-h-60">{menuList}</ul>
             </div>
-            <div>
+            <div className="text-center py-4">
                 <Button
                     onClick={() => submit(props)}
                     variant="contained"

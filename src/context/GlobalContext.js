@@ -12,7 +12,7 @@ const GlobalContext = React.createContext({
     setShowMekedModal: () => {},
     setShowEventUpdateModal: () => {},
     setShowSmallCalender: () => {},
-    setShowMakeMenuModal: () => {},
+    setShowSelectMenuModal: () => {},
     dispatchCalEvent: ({ tyep, payload }) => {},
     savedEvents: [],
     setEventId: () => {},
