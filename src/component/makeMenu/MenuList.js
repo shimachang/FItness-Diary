@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { makeStyles } from "@material-ui/core";
 import { MenuContext } from "../../context/MenuContext";
 import GlobalContext from "../../context/GlobalContext";
 
@@ -21,7 +20,7 @@ const MenuList = (props) => {
     const [listName, setListName] = useState("");
     const currentUser = useContext(AuthContext);
     const { addLabel } = useContext(MenuContext);
-    const { setShowSelectMenuModal} = useContext(GlobalContext)
+    const { setShowSelectMenuModal } = useContext(GlobalContext);
     const propsMenus = props.menus;
     const myMenuList = propsMenus.map((e) => [e.target, e.category, e.menu, e.weight, e.rep]);
     const newMyMenuList = (arr) => {
@@ -49,22 +48,21 @@ const MenuList = (props) => {
 
     const menuList = propsMenus.map((menu) => {
         return (
-            <div className='bg-green-50'>
-
-            <ListItem key={menu.id}>
-                <ListItemText primary={menu.menu} />
-                <ListItemText primary={menu.weight} />
-                <ListItemText primary={menu.rep} />
-                <ListItemSecondaryAction>
-                    <IconButton
-                        edge="end"
-                        aria-label="delete"
-                        onClick={() => deleteHandle(menu.uid, menu.id)}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
+            <div className="bg-green-50">
+                <ListItem key={menu.id}>
+                    <ListItemText primary={menu.menu} />
+                    <ListItemText primary={menu.weight} />
+                    <ListItemText primary={menu.rep} />
+                    <ListItemSecondaryAction>
+                        <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => deleteHandle(menu.uid, menu.id)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
             </div>
         );
     });
@@ -82,7 +80,16 @@ const MenuList = (props) => {
                     />
                     <SelectLabel />
                 </div>
-                <div className='text-center mb-4'>Add New Menu <AddCircleOutlineOutlined onClick={() => setShowSelectMenuModal(true)} /></div>
+                <div className="text-center mb-4">
+                    Add New Menu
+                    <IconButton
+                        edge="end"
+                        aria-label="delete"
+                        onClick={() => setShowSelectMenuModal(true)}
+                    >
+                        <AddCircleOutlineOutlined />
+                    </IconButton>
+                </div>
                 <ul className="pl-0 list-none overflow-scroll max-h-60">{menuList}</ul>
             </div>
             <div className="text-center py-4">

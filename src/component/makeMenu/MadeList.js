@@ -3,43 +3,31 @@ import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
 import GlobalContext from "../../context/GlobalContext";
 import * as Api from "../../firebase/api";
-import MakedListCard from "./MakedListCard";
+import MadeListCard from "./MadeListCard";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
-import { makeStyles } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
 
-const useStyles = makeStyles(() => ({
-    root: {
-        maxWidth: 360,
-        margin: "auto",
-    },
-    list: {
-        justifyContent: "space-between",
-    },
-}));
-
-const MakedList = () => {
-    const classes = useStyles();
+const MadeList = () => {
     const currentUser = useContext(AuthContext);
     const { setShowMakeMenuModal } = useContext(GlobalContext);
-    const [makedMenus, setMakedMenus] = useState([]);
+    const [madeMenus, setMadeMenus] = useState([]);
 
     useEffect(() => {
-        makedFetch();
+        madeFetch();
     }, [currentUser]);
 
-    const makedFetch = async () => {
+    const madeFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
-            const makedData = await Api.getMyMenuLists(currentUser.currentUser.uid);
-            setMakedMenus(makedData);
+            const madeData = await Api.getMyMenuLists(currentUser.currentUser.uid);
+            setMadeMenus(madeData);
         }
     };
     const deleteHandle = (uid, id) => {
         Api.deleteMyMenuList(uid, id);
-        makedFetch();
+        madeFetch();
     };
 
     return (
@@ -57,11 +45,11 @@ const MakedList = () => {
                 </div>
             </div>
             <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
-                {makedMenus.length > 0 &&
-                    makedMenus.map((menu) => (
+                {madeMenus.length > 0 &&
+                    madeMenus.map((menu) => (
                         <div key={menu.listId}>
-                            <ListItem className={classes.root}>
-                                <MakedListCard menu={menu} />
+                            <ListItem className="max-w-sm m-auto">
+                                <MadeListCard menu={menu} />
                                 <span className={`material-icons text-${menu.label}-600 `}>
                                     label
                                 </span>
@@ -86,4 +74,4 @@ const MakedList = () => {
         </>
     );
 };
-export default MakedList;
+export default MadeList;

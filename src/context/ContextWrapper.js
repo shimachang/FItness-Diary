@@ -20,7 +20,7 @@ const ContextWrapper = (props) => {
     const [smallCalenderMonth, setSmallCalenderMonth] = useState(null);
     const [daySelected, setDaySelected] = useState(dayjs());
     const [showEventModal, setShowEventModal] = useState(false);
-    const [showMakedModal, setShowMekedModal] = useState(false);
+    const [showMadeModal, setShowMadeModal] = useState(false);
     const [showEventUpdateModal, setShowEventUpdateModal] = useState(false);
     const [showSmallCalender, setShowSmallCalender] = useState(false);
     const [showMakeMenuModal, setShowMakeMenuModal] = useState(false);
@@ -46,8 +46,8 @@ const ContextWrapper = (props) => {
                 setDaySelected,
                 showEventModal,
                 setShowEventModal,
-                showMakedModal,
-                setShowMekedModal,
+                showMadeModal,
+                setShowMadeModal,
                 showEventUpdateModal,
                 setShowEventUpdateModal,
                 showSmallCalender,

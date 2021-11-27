@@ -8,7 +8,7 @@ import { AddCircleOutlineOutlined } from "@material-ui/icons";
 const EventUpdateModal = () => {
     const {
         setShowEventUpdateModal,
-        setShowMekedModal,
+        setShowMadeModal,
         setShowSmallCalender,
         setEventDescription,
         daySelected,
@@ -20,8 +20,8 @@ const EventUpdateModal = () => {
         eventDescription,
     } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
-    const openMakedListModal = (e) => {
-        setShowMekedModal(e);
+    const openMadeListModal = (e) => {
+        setShowMadeModal(e);
     };
     const updateEventSubmit = (e) => {
         e.preventDefault();
@@ -71,7 +71,7 @@ const EventUpdateModal = () => {
                             <div className="grid grid-cols-1/5 items-end gap-y-7">
                                 <div className="cursor-pointer">
                                     <AddCircleOutlineOutlined
-                                        onClick={() => openMakedListModal(true)}
+                                        onClick={() => openMadeListModal(true)}
                                     />
                                 </div>{" "}
                                 <div>{eventListName ? eventListName : "add a menu"}</div>

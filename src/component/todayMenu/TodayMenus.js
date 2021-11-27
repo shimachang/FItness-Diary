@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
 import dig from "object-dig";
 import ListItem from "@material-ui/core/ListItem";
-import MakedListCard from "../makeMenu/MakedListCard";
+import MadeListCard from "../makeMenu/MadeListCard";
 
 const TodayMenus = () => {
     const { currentUser } = useContext(AuthContext);
@@ -42,7 +42,7 @@ const TodayMenus = () => {
                         todayEvent.map((e) => (
                             <div className="mt-4" key={e[0].listId}>
                                 <ListItem >
-                                    <MakedListCard menu={e[0]} />
+                                    <MadeListCard menu={e[0]} />
                                 </ListItem>
                             </div>
                         ))}

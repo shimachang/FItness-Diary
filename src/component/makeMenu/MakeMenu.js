@@ -5,7 +5,7 @@ import GlobalContext from "../../context/GlobalContext";
 import MenuProvider from "../../context/MenuContext";
 import * as Api from "../../firebase/api";
 import SelectMenuModal from "./SelectMenuModal";
-import MakedList from "./MakedList";
+import MadeList from "./MadeList";
 import MakeMenuModal from "./MakeMenuModal";
 
 const MakeMenu = () => {
@@ -28,7 +28,7 @@ const MakeMenu = () => {
     return (
         <>
             <MenuProvider>
-                <MakedList />
+                <MadeList />
                 {showMakeMenuModal && <MakeMenuModal menus={menus} fetch={fetch} />}
                 {showSelectMenuModal && <SelectMenuModal menus={menus} fetch={fetch} />}
             </MenuProvider>

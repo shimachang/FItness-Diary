@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { ExpandMore } from "@material-ui/icons";
 
-const MakedListCard = (props) => {
+const MadeListCard = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const propsMenus = props.menu.menus;
     const newPropsMenus = Object.values(propsMenus[0]);
@@ -43,4 +43,4 @@ const MakedListCard = (props) => {
         </div>
     );
 };
-export default MakedListCard;
+export default MadeListCard;

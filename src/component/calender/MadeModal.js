@@ -5,7 +5,7 @@ import dig from "object-dig";
 import * as Api from "../../firebase/api";
 import { AuthContext } from "../../context/AuthContext";
 import ListItem from "@material-ui/core/ListItem";
-import MakedListCard from "../makeMenu/MakedListCard";
+import MadeListCard from "../makeMenu/MadeListCard";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -31,21 +31,21 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const MakedModal = () => {
+const MadeModal = () => {
     const classes = useStyles();
-    const { setShowMekedModal, setEventListName, setEventListId, setEventLabel } =
+    const { setShowMadeModal, setEventListName, setEventListId, setEventLabel } =
         useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
-    const [makedMenus, setMakedMenus] = useState([]);
+    const [MadeMenus, setMadeMenus] = useState([]);
 
     useEffect(() => {
-        makedFetch();
+        MadeFetch();
     }, [currentUser]);
 
-    const makedFetch = async () => {
+    const MadeFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
-            const makedData = await Api.getMyMenuLists(currentUser.currentUser.uid);
-            setMakedMenus(makedData);
+            const MadeData = await Api.getMyMenuLists(currentUser.currentUser.uid);
+            setMadeMenus(MadeData);
         }
     };
 
@@ -68,8 +68,8 @@ const MakedModal = () => {
             <div className={classes.body}>
                 <div>Select Menu</div>
                 <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
-                    {makedMenus.length > 0 &&
-                        makedMenus.map((menu) => (
+                    {MadeMenus.length > 0 &&
+                        MadeMenus.map((menu) => (
                             <div key={menu.listId} className="flex justify-items-center">
                                 <input
                                     type="checkbox"
@@ -81,7 +81,7 @@ const MakedModal = () => {
                                 />
                                 <div>{menu.label}</div>
                                 <ListItem className={classes.root}>
-                                    <MakedListCard menu={menu} />
+                                    <MadeListCard menu={menu} />
                                 </ListItem>
                             </div>
                         ))}
@@ -90,7 +90,7 @@ const MakedModal = () => {
                     <button
                         onClick={() => {
                             checkedRefresh();
-                            setShowMekedModal(false);
+                            setShowMadeModal(false);
                         }}
                     >
                         Cancel
@@ -98,7 +98,7 @@ const MakedModal = () => {
                     <button
                         onClick={() => {
                             setEventListName(selectedName);
-                            setShowMekedModal(false);
+                            setShowMadeModal(false);
                         }}
                     >
                         Add
@@ -108,4 +108,4 @@ const MakedModal = () => {
         </div>
     );
 };
-export default MakedModal;
+export default MadeModal;
