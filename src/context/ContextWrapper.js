@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import GlobalContext from "./GlobalContext";
 import dayjs from "dayjs";
 
@@ -16,48 +16,40 @@ const savedEventsReducer = (state, { type, payload }) => {
 };
 
 const ContextWrapper = (props) => {
-    const [monthIndex, setMonthIndex] = useState(dayjs().month());
-    const [smallCalenderMonth, setSmallCalenderMonth] = useState(null);
+    const [currentDayEvent, setCurrentDayEvent] = useState("");
+    const [currentMonthEvent, setCurrentMonthEvent] = useState("");
+    const [currentMenuList, setCurrentMenuList] = useState("");
     const [daySelected, setDaySelected] = useState(dayjs());
-    const [showEventModal, setShowEventModal] = useState(false);
-    const [showMadeModal, setShowMadeModal] = useState(false);
-    const [showEventUpdateModal, setShowEventUpdateModal] = useState(false);
-    const [showSmallCalender, setShowSmallCalender] = useState(false);
-    const [showMakeMenuModal, setShowMakeMenuModal] = useState(false);
-    const [showSelectMenuModal, setShowSelectMenuModal] = useState(false);
-    const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, []);
     const [eventId, setEventId] = useState("");
     const [eventListName, setEventListName] = useState("");
     const [eventListId, setEventListId] = useState("");
     const [eventLabel, setEventLabel] = useState("");
     const [eventDescription, setEventDescription] = useState("");
     const [eventCreated, setEventCreated] = useState("");
-    const [currentDayEvent, setCurrentDayEvent] = useState("");
-    const [currentMonthEvent, setCurrentMonthEvent] = useState("")
+    const [monthIndex, setMonthIndex] = useState(dayjs().month());
+    const [savedEvents, dispatchCalEvent] = useReducer(savedEventsReducer, []);
+    const [smallCalenderMonth, setSmallCalenderMonth] = useState(null);
+    const [showEventModal, setShowEventModal] = useState(false);
+    const [showMadeModal, setShowMadeModal] = useState(false);
+    const [showEventUpdateModal, setShowEventUpdateModal] = useState(false);
+    const [showSmallCalender, setShowSmallCalender] = useState(false);
+    const [showMakeMenuModal, setShowMakeMenuModal] = useState(false);
+    const [showSelectMenuModal, setShowSelectMenuModal] = useState(false);
+    const [showUpdateMadeModal, setShowUpdateMadeModal] = useState(false);
 
     return (
         <GlobalContext.Provider
             value={{
-                monthIndex,
-                setMonthIndex,
-                smallCalenderMonth,
-                setSmallCalenderMonth,
+                currentDayEvent,
+                setCurrentDayEvent,
+                currentMonthEvent,
+                setCurrentMonthEvent,
+                currentMenuList,
+                setCurrentMenuList,
                 daySelected,
                 setDaySelected,
-                showEventModal,
-                setShowEventModal,
-                showMadeModal,
-                setShowMadeModal,
-                showEventUpdateModal,
-                setShowEventUpdateModal,
-                showSmallCalender,
-                setShowSmallCalender,
-                showMakeMenuModal,
-                setShowMakeMenuModal,
-                showSelectMenuModal,
-                setShowSelectMenuModal,
-                dispatchCalEvent,
-                savedEvents,
+                monthIndex,
+                setMonthIndex,
                 eventId,
                 setEventId,
                 eventListName,
@@ -70,10 +62,24 @@ const ContextWrapper = (props) => {
                 setEventDescription,
                 eventCreated,
                 setEventCreated,
-                currentDayEvent,
-                setCurrentDayEvent,
-                currentMonthEvent,
-                setCurrentMonthEvent
+                savedEvents,
+                dispatchCalEvent,
+                smallCalenderMonth,
+                setSmallCalenderMonth,
+                showEventModal,
+                setShowEventModal,
+                showMadeModal,
+                setShowMadeModal,
+                showEventUpdateModal,
+                setShowEventUpdateModal,
+                showSmallCalender,
+                setShowSmallCalender,
+                showUpdateMadeModal,
+                setShowUpdateMadeModal,
+                showMakeMenuModal,
+                setShowMakeMenuModal,
+                showSelectMenuModal,
+                setShowSelectMenuModal,
             }}
         >
             {props.children}

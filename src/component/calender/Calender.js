@@ -6,7 +6,7 @@ import React, { useState, useContext, useEffect } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import EventModal from "./EventModal";
 import MadeModal from "./MadeModal";
-import EventUpdateModal from "./EventUpdateModal";
+import EventUpdateModal from "./UpdateEventModal";
 import SmallCalender from "./SmallCalender";
 
 const Calender = () => {

@@ -13,6 +13,7 @@ const GlobalContext = React.createContext({
     setShowEventUpdateModal: () => {},
     setShowSmallCalender: () => {},
     setShowSelectMenuModal: () => {},
+    setShowUpdateMadeModal: () => {},
     dispatchCalEvent: ({ type, payload }) => {},
     savedEvents: [],
     setEventId: () => {},
@@ -23,6 +24,7 @@ const GlobalContext = React.createContext({
     setEventCreated: () => {},
     setCurrentDayEvent: () => {},
     setCurrentMonthEvent: () => {},
+    setCurrentMenuList: () => {},
 });
 
 export default GlobalContext;

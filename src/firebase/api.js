@@ -6,7 +6,7 @@ export const getInitCalenderEvents = async (uid) => {
     return events.get().then((snapshot) => {
         let eventLists = [];
         snapshot.forEach((doc) => {
-            const data = doc.data()
+            const data = doc.data();
             eventLists.push({
                 day: data.day,
                 description: data.description,
@@ -22,13 +22,12 @@ export const getInitCalenderEvents = async (uid) => {
     });
 };
 
-export const getTemporaryList = async (uid) => {
-    const temporary = await db.collection("users").doc(uid).collection("Temporary_storage");
-
-    return temporary.get().then((snapshot) => {
+export const getNewStorage = async (uid) => {
+    const NewStorage = await db.collection("users").doc(uid).collection("NewStorage");
+    return NewStorage.get().then((snapshot) => {
         let menuLists = [];
         snapshot.forEach((doc) => {
-            const data = doc.data()
+            const data = doc.data();
             menuLists.push({
                 target: data.target,
                 category: data.category,
@@ -48,12 +47,12 @@ export const getMyMenuLists = async (uid) => {
     return menu.get().then((snapshot) => {
         let menuLists = [];
         snapshot.forEach((doc) => {
-            const data = doc.data()
+            const data = doc.data();
             menuLists.push({
                 listName: data.listName,
                 uid: data.uid,
                 listId: data.id,
-                menus: [data.menus],
+                menus: data.menus,
                 label: data.label,
             });
         });
@@ -65,22 +64,20 @@ export const getCurrentMyMenuList = async (uid, listId) => {
     const menu = await db.collection("users").doc(uid).collection("MyMenuList").doc(listId);
     return menu.get().then((snapshot) => {
         let menuLists = [];
-        snapshot.forEach((doc) => {
-            const data = doc.data()
-            menuLists.push({
-                listName: data.listName,
-                uid: data.uid,
-                id: data.id,
-                menus: [data.menus],
-                label: data.label,
-            });
+        const data = snapshot.data();
+        menuLists.push({
+            listName: data.listName,
+            uid: data.uid,
+            id: data.id,
+            menus: data.menus,
+            label: data.label,
         });
         return menuLists;
     });
 };
 
-export const deleteTemporary = (uid, id) => {
-    db.collection("users").doc(uid).collection("Temporary_storage").doc(id).delete();
+export const deleteNewStorage = (uid, id) => {
+    db.collection("users").doc(uid).collection("NewStorage").doc(id).delete();
 };
 
 export const deleteMyMenuList = (uid, id) => {
@@ -102,7 +99,7 @@ export const toggleComplete = async (id) => {
         });
 };
 
-export const addTemporaryMenuList = (
+export const addNewStorageMenuList = (
     currentUser,
     addTarget,
     addCategory,
@@ -110,7 +107,7 @@ export const addTemporaryMenuList = (
     addWeight,
     addRep
 ) => {
-    const collection = db.collection("users").doc(currentUser).collection("Temporary_storage");
+    const collection = db.collection("users").doc(currentUser).collection("NewStorage");
     const newDoc = collection.doc().id;
     collection.doc(newDoc).set({
         uid: currentUser,
@@ -207,3 +204,15 @@ export const updateMyMenuList = (
     );
 };
 
+export const getNewStorageDocsId = async (uid) => {
+    const NewStorage = await db.collection("users").doc(uid).collection("NewStorage");
+    return NewStorage.get().then((snapshot) => {
+        let docs = [];
+        snapshot.forEach((doc) => {
+            docs.push({
+                id: doc.data().id,
+            });
+        });
+        return docs;
+    });
+};

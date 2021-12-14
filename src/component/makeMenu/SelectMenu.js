@@ -16,8 +16,8 @@ const SelectMenu = ({ currentTarget, currentCategory }) => {
     ]);
 
     const { setAddMenu } = useContext(MenuContext);
-
     const [currentMenu, setCurrentMenu] = useState("");
+
     useEffect(() => {
         const armMenus = db
             .collection("menu")

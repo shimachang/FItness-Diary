@@ -47,16 +47,34 @@ const Header = ({ setTab }) => {
 
     return (
         <AppBar position="static">
-            <Toolbar className={classes.toolbar}>
+            <Toolbar className="justify-between">
                 <Typography variant="h6">Fitness Diary</Typography>
                 <Grid className={classes.grid} container spacing={3}>
-                    <Grid onClick={() => setTab("todayMenus")} item xs={4} md={3}>
+                    <Grid
+                        className="cursor-pointer"
+                        onClick={() => setTab("todayMenus")}
+                        item
+                        xs={4}
+                        md={3}
+                    >
                         今日のメニュー
                     </Grid>
-                    <Grid onClick={() => setTab("calender")} className={classes.grid} item xs={4} md={3}>
+                    <Grid
+                        className="cursor-pointer"
+                        onClick={() => setTab("calender")}
+                        item
+                        xs={4}
+                        md={3}
+                    >
                         カレンダー
                     </Grid>
-                    <Grid onClick={() => setTab("makeMenu")} className={classes.grid} item xs={4} md={3}>
+                    <Grid
+                        className="cursor-pointer"
+                        onClick={() => setTab("makeMenu")}
+                        item
+                        xs={4}
+                        md={3}
+                    >
                         メニュー作成
                     </Grid>
                 </Grid>

@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../context/MenuContext";
+import { UpdateContext } from "../../context/UpdateContext";
 
-const SelectLabel = () => {
+const SelectLabel = ({ currentLabelClass }) => {
     const { setAddLabel } = useContext(MenuContext);
+    const { setUpdateLabel } = useContext(UpdateContext);
     const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
-    const [currentLabel, setCurrentLabel] = useState(labelsClasses[0]);
-
+    const [currentLabel, setCurrentLabel] = useState(
+        currentLabelClass ? currentLabelClass : labelsClasses[0]
+    );
     useEffect(() => {
         setAddLabel(currentLabel);
+        setUpdateLabel(currentLabel);
     }, [currentLabel]);
 
     return (

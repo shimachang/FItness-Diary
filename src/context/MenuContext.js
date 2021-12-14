@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export const MenuContext = React.createContext();
 
 export const MenuProvider = ({ children }) => {
-
     const [addTarget, setAddTarget] = useState("");
     const [addCategory, setAddCategory] = useState("");
     const [addMenu, setAddMenu] = useState("");
     const [addWeight, setAddWeight] = useState("");
     const [addRep, setAddRep] = useState("");
-    const [addLabel, setAddLabel] = useState('');
+    const [addLabel, setAddLabel] = useState("");
     const value = {
         addTarget,
         setAddTarget,

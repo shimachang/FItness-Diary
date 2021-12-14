@@ -1,6 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import dig from "object-dig";
-import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import * as Api from "../../firebase/api";
 import MadeListCard from "./MadeListCard";
@@ -10,20 +8,14 @@ import CreateIcon from "@material-ui/icons/Create";
 import ListItem from "@material-ui/core/ListItem";
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
 
-const MadeList = () => {
-    const currentUser = useContext(AuthContext);
-    const { setShowMakeMenuModal } = useContext(GlobalContext);
-    const [madeMenus, setMadeMenus] = useState([]);
+const MadeList = ({ madeMenus, madeFetch }) => {
+    const { setShowMakeMenuModal, setShowUpdateMadeModal, setCurrentMenuList } =
+        useContext(GlobalContext);
 
-    useEffect(() => {
-        madeFetch();
-    }, [currentUser]);
-
-    const madeFetch = async () => {
-        if (dig(currentUser, "currentUser", "uid")) {
-            const madeData = await Api.getMyMenuLists(currentUser.currentUser.uid);
-            setMadeMenus(madeData);
-        }
+    const updateHandle = async (uid, id) => {
+        const MenuList = await Api.getCurrentMyMenuList(uid, id);
+        setCurrentMenuList(MenuList);
+        setShowUpdateMadeModal(true);
     };
     const deleteHandle = (uid, id) => {
         Api.deleteMyMenuList(uid, id);
@@ -56,7 +48,7 @@ const MadeList = () => {
                                 <IconButton
                                     edge="end"
                                     aria-label="delete"
-                                    onClick={() => Api.updateMyMenuList(menu.uid, menu.listId)}
+                                    onClick={() => updateHandle(menu.uid, menu.listId)}
                                 >
                                     <CreateIcon />
                                 </IconButton>

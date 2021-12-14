@@ -1,4 +1,4 @@
-import dayjs, { Ls } from "dayjs";
+import dayjs from "dayjs";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
@@ -17,6 +17,7 @@ const TodayMenus = () => {
         if (dig(currentUser, "uid")) {
             const menuLists = await Api.getMyMenuLists(currentUser.uid);
             const eventFetch = await Api.getInitCalenderEvents(currentUser.uid);
+            console.log(menuLists)
             const filterEvent = eventFetch.filter(
                 (evt) => dayjs(evt.day).format("DD-MM-YY") === dayjs().format("DD-MM-YY")
             );
@@ -41,7 +42,7 @@ const TodayMenus = () => {
                     {todayEvent &&
                         todayEvent.map((e) => (
                             <div className="mt-4" key={e[0].listId}>
-                                <ListItem >
+                                <ListItem>
                                     <MadeListCard menu={e[0]} />
                                 </ListItem>
                             </div>

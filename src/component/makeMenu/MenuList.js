@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
@@ -20,37 +20,36 @@ const MenuList = (props) => {
     const [listName, setListName] = useState("");
     const currentUser = useContext(AuthContext);
     const { addLabel } = useContext(MenuContext);
-    const { setShowSelectMenuModal } = useContext(GlobalContext);
+    const { setShowSelectMenuModal, setShowMakeMenuModal } = useContext(GlobalContext);
     const propsMenus = props.menus;
-    const myMenuList = propsMenus.map((e) => [e.target, e.category, e.menu, e.weight, e.rep]);
-    const newMyMenuList = (arr) => {
-        let obj = {};
-        for (let i = 0; i < arr.length; i++) {
-            obj[i] = arr[i];
-        }
-        return obj;
-    };
-    const submit = (props) => {
+    const submit = async () => {
         if (propsMenus) {
             Api.addMyMenuList(
                 listName,
                 dig(currentUser, "currentUser", "uid"),
-                newMyMenuList(myMenuList),
+                propsMenus,
                 addLabel
             );
+            const docs = await Api.getNewStorageDocsId(dig(currentUser, "currentUser", "uid"));
+            for (const doc of docs) {
+                Api.deleteNewStorage(dig(currentUser, "currentUser", "uid"), doc.id);
+            }
         }
+        props.fetch();
+        props.madeFetch();
+        setShowMakeMenuModal(false);
     };
 
     const deleteHandle = (uid, id) => {
-        Api.deleteTemporary(uid, id);
+        Api.deleteNewStorage(uid, id);
         props.fetch();
     };
 
     const menuList = propsMenus.map((menu) => {
         return (
-            <div className="bg-green-50">
-                <ListItem key={menu.id}>
-                    <ListItemText primary={menu.menu} />
+            <div key={menu.id} className="bg-green-50">
+                <ListItem>
+                    <ListItemText className="w-32" primary={menu.menu} />
                     <ListItemText primary={menu.weight} />
                     <ListItemText primary={menu.rep} />
                     <ListItemSecondaryAction>
@@ -94,7 +93,7 @@ const MenuList = (props) => {
             </div>
             <div className="text-center py-4">
                 <Button
-                    onClick={() => submit(props)}
+                    onClick={() => submit()}
                     variant="contained"
                     disabled={listName ? false : true}
                     color="primary"

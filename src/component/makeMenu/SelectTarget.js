@@ -8,7 +8,7 @@ import SelectMenu from "./SelectMenu";
 import { MenuContext } from "../../context/MenuContext";
 
 const SelectTarget = () => {
-    const targets = ["腕", "胸", "脚", "肩", "背中", "腹"];
+    const targets = ["腕", "胸", "脚", "肩", "背中", "腹筋"];
     const [currentTarget, setCurrentTarget] = useState("");
     const handleTargetChange = (event) => {
         setCurrentTarget(event.target.value);

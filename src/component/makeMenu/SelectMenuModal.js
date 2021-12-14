@@ -20,11 +20,11 @@ const SelectMenuModal = (props) => {
         addRep,
         setAddRep,
     } = useContext(MenuContext);
-    const {setShowSelectMenuModal} =useContext(GlobalContext)
+    const { setShowSelectMenuModal } = useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const submit = () => {
         if (addMenu) {
-            Api.addTemporaryMenuList(
+            Api.addNewStorageMenuList(
                 dig(currentUser, "currentUser", "uid"),
                 addTarget,
                 addCategory,
@@ -37,7 +37,7 @@ const SelectMenuModal = (props) => {
             setAddMenu("");
             setAddWeight("");
             setAddRep("");
-            setShowSelectMenuModal(false)
+            setShowSelectMenuModal(false);
         } else {
             return;
         }
@@ -57,16 +57,16 @@ const SelectMenuModal = (props) => {
                     <div className="bg-green-50 py-4 px-2">
                         <MakeMenuCard />
                     </div>
-                        <div className="text-center py-4">
-                            <Button
-                                onClick={() => submit()}
-                                disabled={addMenu ? false : true}
-                                size="large"
-                                variant="contained"
-                            >
-                                追加
-                            </Button>
-                        </div>
+                    <div className="text-center py-4">
+                        <Button
+                            onClick={() => submit()}
+                            disabled={addMenu ? false : true}
+                            size="large"
+                            variant="contained"
+                        >
+                            追加
+                        </Button>
+                    </div>
                 </form>
             </div>
         </div>

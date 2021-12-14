@@ -12,6 +12,7 @@ const SelectedDayEvent = () => {
         setEventDescription,
         setEventCreated,
     } = useContext(GlobalContext);
+    console.log(currentDayEvent)
     
     return (
         <div className="pt-4">

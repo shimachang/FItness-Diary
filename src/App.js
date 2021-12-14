@@ -1,16 +1,14 @@
 import Calender from "./component/calender/Calender";
 import Header from "./component/global/Header";
 import { AuthProvider } from "./context/AuthContext";
+import UpdateProvider from "./context/UpdateContext";
 import MakeMenu from "./component/makeMenu/MakeMenu";
-import Footer from "./component/global/Footer";
 import TodayMenus from "./component/todayMenu/TodayMenus";
-import { useState, useContext } from "react";
-import MakeMenuModal from "./component/makeMenu/MakeMenuModal";
-import GlobalContext from "./context/GlobalContext";
+import { useState } from "react";
 
 const App = () => {
-    const [tab, setTab] = useState("todayMenus");
-    
+    const [tab, setTab] = useState("makeMenu");
+
     const Body = () => {
         switch (tab) {
             case "todayMenus":
@@ -27,10 +25,10 @@ const App = () => {
 
     return (
         <AuthProvider>
-            <Header setTab={setTab} />
-            <Body />
-            
-            {/* <Footer /> */}
+            <UpdateProvider>
+                <Header setTab={setTab} />
+                <Body />
+            </UpdateProvider>
         </AuthProvider>
     );
 };

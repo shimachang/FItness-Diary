@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
         backgroundColor: "rgba(0,0,0, .5)",
     },
     body: {
-        width: "340px",
+        width: "360px",
         padding: "24px 36px",
         backgroundColor: "white",
     },
