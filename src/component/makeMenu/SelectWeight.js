@@ -5,17 +5,19 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuContext } from "../../context/MenuContext";
+import { UpdateContext } from "../../context/UpdateContext";
 
 const SelectWeight = () => {
     const [currentWeight, setCurrentWeight] = useState("");
 
     const {setAddWeight} = useContext(MenuContext)
-
+    const {setUpdateWeight} = useContext(UpdateContext)
     const handleChange = (event) => {
         setCurrentWeight(event.target.value);
     };
 
     useEffect(() => {
+        setUpdateWeight(currentWeight)
         setAddWeight(currentWeight)
     }, [currentWeight])
 

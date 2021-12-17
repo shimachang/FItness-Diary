@@ -6,21 +6,16 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { db } from "../../firebase";
 import { MenuContext } from "../../context/MenuContext";
+import { UpdateContext } from "../../context/UpdateContext";
 
 const SelectMenu = ({ currentTarget, currentCategory }) => {
-    const [menu, setMenu] = useState([
-        {
-            name: "",
-            target: "",
-        },
-    ]);
-
+    const [menu, setMenu] = useState([]);
     const { setAddMenu } = useContext(MenuContext);
+    const { setUpdateMenu } = useContext(UpdateContext);
     const [currentMenu, setCurrentMenu] = useState("");
 
     useEffect(() => {
-        const armMenus = db
-            .collection("menu")
+        db.collection("menu")
             .where("target", "==", `${currentTarget}`)
             .where("category", "==", `${currentCategory}`)
             .get()
@@ -34,6 +29,7 @@ const SelectMenu = ({ currentTarget, currentCategory }) => {
     }, [currentTarget, currentCategory]);
 
     useEffect(() => {
+        setUpdateMenu(currentMenu);
         setAddMenu(currentMenu);
     }, [currentMenu]);
 

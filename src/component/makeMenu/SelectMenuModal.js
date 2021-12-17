@@ -6,6 +6,7 @@ import * as Api from "../../firebase/api";
 import { AuthContext } from "../../context/AuthContext";
 import dig from "object-dig";
 import GlobalContext from "../../context/GlobalContext";
+import { UpdateContext } from "../../context/UpdateContext";
 
 const SelectMenuModal = (props) => {
     const {
@@ -20,9 +21,21 @@ const SelectMenuModal = (props) => {
         addRep,
         setAddRep,
     } = useContext(MenuContext);
-    const { setShowSelectMenuModal } = useContext(GlobalContext);
+    const { updateTarget, updateCategory, updateMenu, updateWeight, updateRep } =
+        useContext(UpdateContext);
+    const { setShowSelectMenuModal, showUpdateMadeModal, currentMenuList } =
+        useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
     const submit = () => {
+        if (showUpdateMadeModal) {
+            currentMenuList[0].menus.push({
+                target: updateTarget,
+                category: updateCategory,
+                menu: updateMenu,
+                weight: updateWeight,
+                rep: updateRep,
+            });
+        }
         if (addMenu) {
             Api.addNewStorageMenuList(
                 dig(currentUser, "currentUser", "uid"),
@@ -38,8 +51,6 @@ const SelectMenuModal = (props) => {
             setAddWeight("");
             setAddRep("");
             setShowSelectMenuModal(false);
-        } else {
-            return;
         }
         props.fetch();
     };
@@ -49,7 +60,7 @@ const SelectMenuModal = (props) => {
                 <form className="mt-2 bg-white relative rounded-lg shadow-2xl">
                     <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
                         <span className="material-icons-outlined text-gray-400">drag_handle</span>
-                        <span>Select Menu</span>
+                        <span>{showUpdateMadeModal ? "Up Select Menu" : "Select Menu"}</span>
                         <button onClick={() => setShowSelectMenuModal(false)}>
                             <span className="material-icons-outlined text-gray-400">close</span>
                         </button>

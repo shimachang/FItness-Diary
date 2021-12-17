@@ -9,7 +9,9 @@ const UpdateMadeModal = () => {
     const { setShowUpdateMadeModal, setShowSelectMenuModal, currentMenuList } =
         useContext(GlobalContext);
     const [listName, setListName] = useState(currentMenuList[0].listName);
+    const submit = () => {
 
+    }
     return (
         <div className="h-screen w-screen fixed left-0 top-0">
             <div className="w-full h-full absolute bg-black bg-opacity-40 flex justify-center items-center">
@@ -49,7 +51,7 @@ const UpdateMadeModal = () => {
                     </div>
                     <div className="text-center py-4">
                         <Button
-                            // onClick={() => submit()}
+                            onClick={() => submit()}
                             variant="contained"
                             disabled={listName ? false : true}
                             color="primary"

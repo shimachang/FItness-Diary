@@ -5,18 +5,21 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuContext } from "../../context/MenuContext";
+import { UpdateContext } from "../../context/UpdateContext";
 
 const SelectRep = () => {
-    const {setAddRep} = useContext(MenuContext)
+    const { setAddRep } = useContext(MenuContext);
+    const { setUpdateRep } = useContext(UpdateContext);
     const [currentRep, setCurrentRep] = useState("");
 
     const handleChange = (event) => {
         setCurrentRep(event.target.value);
     };
 
-    useEffect(()=> {
-        setAddRep(currentRep)
-    }, [currentRep])
+    useEffect(() => {
+        setUpdateRep(currentRep);
+        setAddRep(currentRep);
+    }, [currentRep]);
 
     return (
         <Box sx={{ minWidth: 80 }}>

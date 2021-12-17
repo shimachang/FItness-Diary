@@ -6,8 +6,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import SelectMenu from "./SelectMenu";
 import { MenuContext } from "../../context/MenuContext";
+import GlobalContext from "../../context/GlobalContext";
+import { UpdateContext } from "../../context/UpdateContext";
 
 const SelectTarget = () => {
+    const { showUpdateModal } = useContext(GlobalContext);
+    const { setUpdateCategory, setUpdateTarget } = useContext(UpdateContext);
     const targets = ["腕", "胸", "脚", "肩", "背中", "腹筋"];
     const [currentTarget, setCurrentTarget] = useState("");
     const handleTargetChange = (event) => {
@@ -22,6 +26,8 @@ const SelectTarget = () => {
     };
 
     useEffect(() => {
+        setUpdateCategory(currentCategory);
+        setUpdateTarget(currentTarget);
         setAddTarget(currentTarget);
         setAddCategory(currentCategory);
     }, [currentTarget, currentCategory]);

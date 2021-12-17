@@ -1,9 +1,9 @@
-import Calender from "./component/calender/Calender";
+import Calender from "./component/calender";
 import Header from "./component/global/Header";
 import { AuthProvider } from "./context/AuthContext";
 import UpdateProvider from "./context/UpdateContext";
-import MakeMenu from "./component/makeMenu/MakeMenu";
-import TodayMenus from "./component/todayMenu/TodayMenus";
+import MakeMenu from "./component/makeMenu";
+import TodayMenus from "./component/todayMenu";
 import { useState } from "react";
 
 const App = () => {

@@ -5,7 +5,6 @@ import GlobalContext from "../../context/GlobalContext";
 
 const CurrentMenuList = () => {
     const { currentMenuList, setCurrentMenuList } = useContext(GlobalContext);
-    console.log(currentMenuList[0].menus);
     const deleteHandle = () => {
         const array = currentMenuList[0].menus;
         // const newArray = array.filter((e) => e.menus !== currentMenuList[0].menus[i]);
