@@ -13,6 +13,7 @@ const EventModal = () => {
         daySelected,
         eventListId,
         eventListName,
+        setEventListName,
         eventLabel,
         eventDescription,
         setEventDescription,
@@ -34,6 +35,8 @@ const EventModal = () => {
             );
         }
         setShowEventModal(false);
+        setEventListName("");
+        setEventDescription("");
     };
 
     return (
@@ -59,7 +62,7 @@ const EventModal = () => {
                                 </div>
                                 <div>{eventListName ? eventListName : "add a menu"}</div>
                                 <span
-                                    className="material-icons-outlined text-gray-400"
+                                    className="material-icons-outlined text-black-400 cursor-pointer"
                                     onClick={() => setShowSmallCalender(true)}
                                 >
                                     schedule

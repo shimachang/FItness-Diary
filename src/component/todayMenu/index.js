@@ -17,7 +17,6 @@ const TodayMenus = () => {
         if (dig(currentUser, "uid")) {
             const menuLists = await Api.getMyMenuLists(currentUser.uid);
             const eventFetch = await Api.getInitCalenderEvents(currentUser.uid);
-            console.log(menuLists)
             const filterEvent = eventFetch.filter(
                 (evt) => dayjs(evt.day).format("DD-MM-YY") === dayjs().format("DD-MM-YY")
             );
@@ -29,7 +28,7 @@ const TodayMenus = () => {
             setTodayEvent(currentEvents);
         }
     };
-
+    console.log(todayEvent);
     return (
         <>
             <div className="w-screen h-screen max-w-sm m-auto text-center bg-green-50">

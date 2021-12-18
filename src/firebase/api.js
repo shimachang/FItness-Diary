@@ -54,6 +54,7 @@ export const getMyMenuLists = async (uid) => {
                 listId: data.id,
                 menus: data.menus,
                 label: data.label,
+                created_at: data.created_at,
             });
         });
         return menuLists;
@@ -71,6 +72,7 @@ export const getCurrentMyMenuList = async (uid, listId) => {
             id: data.id,
             menus: data.menus,
             label: data.label,
+            created_at: data.created_at,
         });
         return menuLists;
     });
@@ -86,6 +88,13 @@ export const deleteMyMenuList = (uid, id) => {
 
 export const deleteEvent = (uid, id) => {
     db.collection("users").doc(uid).collection("Events").doc(id).delete();
+};
+export const deleteEventWithListId =  async (uid, id) => {
+    const ref = db.collection("users").doc(uid).collection("Events");
+    const query =  await ref.where("listId", "==", id).get();
+    query.docs.forEach( async doc => {
+        await doc.ref.delete()
+    })
 };
 
 export const toggleComplete = async (id) => {
@@ -177,27 +186,16 @@ export const updateEvents = (
     );
 };
 
-export const updateMyMenuList = (
-    eventCreated,
-    eventId,
-    listName,
-    listId,
-    currentUser,
-    day,
-    description,
-    label
-) => {
-    const collection = db.collection("users").doc(currentUser).collection("Events");
+export const updateMyMenuList = (listName, currentUser, eventId, menus, created_at, label) => {
+    const collection = db.collection("users").doc(currentUser).collection("MyMenuList");
     collection.doc(eventId).set(
         {
-            created_at: eventCreated,
-            eventId: eventId,
             listName: listName,
-            listId: listId,
             uid: currentUser,
+            menus: menus,
+            created_at: created_at,
             updated_at: firebaseTimeStamp,
-            day: day,
-            description: description,
+            id: eventId,
             label: label,
         },
         { marge: true }

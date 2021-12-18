@@ -15,7 +15,6 @@ const MakeMenu = () => {
     const [madeMenus, setMadeMenus] = useState([]);
     const { showMakeMenuModal, showSelectMenuModal, showUpdateMadeModal, currentMenuList } =
         useContext(GlobalContext);
-
     useEffect(() => {
         fetch();
         madeFetch();
@@ -40,7 +39,9 @@ const MakeMenu = () => {
         <>
             <MenuProvider>
                 <MadeList madeMenus={madeMenus} madeFetch={madeFetch} />
-                {showMakeMenuModal && <MakeMenuModal menus={menus} fetch={fetch} madeFetch={madeFetch} />}
+                {showMakeMenuModal && (
+                    <MakeMenuModal menus={menus} fetch={fetch} madeFetch={madeFetch} />
+                )}
                 {showUpdateMadeModal && <UpdateMadeModal menus={menus} fetch={fetch} />}
                 {showSelectMenuModal && <SelectMenuModal menus={menus} fetch={fetch} />}
             </MenuProvider>

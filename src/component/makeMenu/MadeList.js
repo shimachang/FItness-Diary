@@ -11,7 +11,6 @@ import { AddCircleOutlineOutlined } from "@material-ui/icons";
 const MadeList = ({ madeMenus, madeFetch }) => {
     const { setShowMakeMenuModal, setShowUpdateMadeModal, setCurrentMenuList } =
         useContext(GlobalContext);
-
     const updateHandle = async (uid, id) => {
         const MenuList = await Api.getCurrentMyMenuList(uid, id);
         setCurrentMenuList(MenuList);
@@ -19,6 +18,7 @@ const MadeList = ({ madeMenus, madeFetch }) => {
     };
     const deleteHandle = (uid, id) => {
         Api.deleteMyMenuList(uid, id);
+        Api.deleteEventWithListId(uid, id);
         madeFetch();
     };
 

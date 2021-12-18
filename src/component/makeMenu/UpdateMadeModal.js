@@ -4,14 +4,26 @@ import { useContext, useState } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import SelectLabel from "./SelectLabel";
 import CurrentMenuList from "./CurrentMenuLIst";
+import * as Api from "../../firebase/api";
+import { UpdateContext } from "../../context/UpdateContext";
 
 const UpdateMadeModal = () => {
     const { setShowUpdateMadeModal, setShowSelectMenuModal, currentMenuList } =
         useContext(GlobalContext);
+    const { updateLabel } = useContext(UpdateContext);
+    console.log(currentMenuList[0]);
     const [listName, setListName] = useState(currentMenuList[0].listName);
     const submit = () => {
-
-    }
+        Api.updateMyMenuList(
+            listName,
+            currentMenuList[0].uid,
+            currentMenuList[0].id,
+            currentMenuList[0].menus,
+            currentMenuList[0].created_at,
+            updateLabel
+        );
+        setShowUpdateMadeModal(false)
+    };
     return (
         <div className="h-screen w-screen fixed left-0 top-0">
             <div className="w-full h-full absolute bg-black bg-opacity-40 flex justify-center items-center">
