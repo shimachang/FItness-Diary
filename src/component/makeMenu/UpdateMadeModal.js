@@ -11,7 +11,6 @@ const UpdateMadeModal = () => {
     const { setShowUpdateMadeModal, setShowSelectMenuModal, currentMenuList } =
         useContext(GlobalContext);
     const { updateLabel } = useContext(UpdateContext);
-    console.log(currentMenuList[0]);
     const [listName, setListName] = useState(currentMenuList[0].listName);
     const submit = () => {
         Api.updateMyMenuList(
@@ -22,7 +21,7 @@ const UpdateMadeModal = () => {
             currentMenuList[0].created_at,
             updateLabel
         );
-        setShowUpdateMadeModal(false)
+        setShowUpdateMadeModal(false);
     };
     return (
         <div className="h-screen w-screen fixed left-0 top-0">
