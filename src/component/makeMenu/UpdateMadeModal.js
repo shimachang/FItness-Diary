@@ -21,6 +21,7 @@ const UpdateMadeModal = () => {
             currentMenuList[0].created_at,
             updateLabel
         );
+        // Api.updateEventWithMyMenuList()
         setShowUpdateMadeModal(false);
     };
     return (

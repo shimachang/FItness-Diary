@@ -14,7 +14,6 @@ const EventModal = () => {
         eventListId,
         eventListName,
         setEventListName,
-        eventLabel,
         eventDescription,
         setEventDescription,
     } = useContext(GlobalContext);
@@ -26,12 +25,10 @@ const EventModal = () => {
         e.preventDefault();
         if (eventListId) {
             Api.addEvents(
-                eventListName,
                 eventListId,
                 dig(currentUser, "currentUser", "uid"),
                 daySelected.valueOf(),
                 eventDescription,
-                eventLabel
             );
         }
         setShowEventModal(false);

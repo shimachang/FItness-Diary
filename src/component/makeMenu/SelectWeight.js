@@ -6,23 +6,26 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuContext } from "../../context/MenuContext";
 import { UpdateContext } from "../../context/UpdateContext";
+import { TodayContext } from "../../context/TodayContext";
 
-const SelectWeight = () => {
-    const [currentWeight, setCurrentWeight] = useState("");
+const SelectWeight = ({todayEvent, listIndex, menuIndex}) => {
+    const initData = todayEvent ? todayEvent[listIndex][0].menus[menuIndex].weight : "";
 
+    const [currentWeight, setCurrentWeight] = useState(initData);
     const {setAddWeight} = useContext(MenuContext)
     const {setUpdateWeight} = useContext(UpdateContext)
+    const {setTodayWeight} = useContext(TodayContext)
     const handleChange = (event) => {
         setCurrentWeight(event.target.value);
     };
-
     useEffect(() => {
         setUpdateWeight(currentWeight)
         setAddWeight(currentWeight)
+        setTodayWeight(currentWeight)
     }, [currentWeight])
 
     return (
-        <Box sx={{ minWidth: 90 }}>
+        <Box sx={{ minWidth: 90  }}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Weight</InputLabel>
                 <Select

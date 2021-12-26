@@ -17,7 +17,6 @@ const savedEventsReducer = (state, { type, payload }) => {
 
 const ContextWrapper = (props) => {
     const [currentDayEvent, setCurrentDayEvent] = useState("");
-    const [currentMonthEvent, setCurrentMonthEvent] = useState("");
     const [currentMenuList, setCurrentMenuList] = useState("");
     const [daySelected, setDaySelected] = useState(dayjs());
     const [eventId, setEventId] = useState("");
@@ -42,8 +41,6 @@ const ContextWrapper = (props) => {
             value={{
                 currentDayEvent,
                 setCurrentDayEvent,
-                currentMonthEvent,
-                setCurrentMonthEvent,
                 currentMenuList,
                 setCurrentMenuList,
                 daySelected,

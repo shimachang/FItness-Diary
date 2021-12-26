@@ -5,9 +5,11 @@ import UpdateProvider from "./context/UpdateContext";
 import MakeMenu from "./component/makeMenu";
 import TodayMenus from "./component/todayMenu";
 import { useState } from "react";
+import MenuProvider from "./context/MenuContext";
+import { TodayProvider } from "./context/TodayContext";
 
 const App = () => {
-    const [tab, setTab] = useState("makeMenu");
+    const [tab, setTab] = useState("todayMenus");
 
     const Body = () => {
         switch (tab) {
@@ -26,8 +28,12 @@ const App = () => {
     return (
         <AuthProvider>
             <UpdateProvider>
-                <Header setTab={setTab} />
-                <Body />
+                <MenuProvider>
+                    <TodayProvider>
+                        <Header setTab={setTab} />
+                        <Body />
+                    </TodayProvider>
+                </MenuProvider>
             </UpdateProvider>
         </AuthProvider>
     );

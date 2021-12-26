@@ -23,7 +23,6 @@ const GlobalContext = React.createContext({
     setEventDescription: () => {},
     setEventCreated: () => {},
     setCurrentDayEvent: () => {},
-    setCurrentMonthEvent: () => {},
     setCurrentMenuList: () => {},
 });
 

@@ -7,10 +7,12 @@ import Select from "@mui/material/Select";
 import { MenuContext } from "../../context/MenuContext";
 import { UpdateContext } from "../../context/UpdateContext";
 
-const SelectRep = () => {
+const SelectRep = ({todayEvent, listIndex, menuIndex}) => {
+    const initData = todayEvent ? todayEvent[listIndex][0].menus[menuIndex].rep : "";
+
     const { setAddRep } = useContext(MenuContext);
     const { setUpdateRep } = useContext(UpdateContext);
-    const [currentRep, setCurrentRep] = useState("");
+    const [currentRep, setCurrentRep] = useState(initData);
 
     const handleChange = (event) => {
         setCurrentRep(event.target.value);
@@ -22,7 +24,7 @@ const SelectRep = () => {
     }, [currentRep]);
 
     return (
-        <Box sx={{ minWidth: 80 }}>
+        <Box sx={{ minWidth: 70 }}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Rep</InputLabel>
                 <Select

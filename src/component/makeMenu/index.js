@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import dig from "object-dig";
 import { AuthContext } from "../../context/AuthContext";
 import GlobalContext from "../../context/GlobalContext";
-import MenuProvider from "../../context/MenuContext";
 import * as Api from "../../firebase/api";
 import SelectMenuModal from "./SelectMenuModal";
 import MadeList from "./MadeList";
@@ -37,14 +36,12 @@ const MakeMenu = () => {
 
     return (
         <>
-            <MenuProvider>
-                <MadeList madeMenus={madeMenus} madeFetch={madeFetch} />
-                {showMakeMenuModal && (
-                    <MakeMenuModal menus={menus} fetch={fetch} madeFetch={madeFetch} />
-                )}
-                {showUpdateMadeModal && <UpdateMadeModal menus={menus} fetch={fetch} />}
-                {showSelectMenuModal && <SelectMenuModal menus={menus} fetch={fetch} />}
-            </MenuProvider>
+            <MadeList madeMenus={madeMenus} madeFetch={madeFetch} />
+            {showMakeMenuModal && (
+                <MakeMenuModal menus={menus} fetch={fetch} madeFetch={madeFetch} />
+            )}
+            {showUpdateMadeModal && <UpdateMadeModal menus={menus} fetch={fetch} />}
+            {showSelectMenuModal && <SelectMenuModal menus={menus} fetch={fetch} />}
         </>
     );
 };

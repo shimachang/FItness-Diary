@@ -36,7 +36,7 @@ const MadeModal = () => {
     const { setShowMadeModal, setEventListName, setEventListId, setEventLabel } =
         useContext(GlobalContext);
     const currentUser = useContext(AuthContext);
-    const [MadeMenus, setMadeMenus] = useState([]);
+    const [madeMenus, setMadeMenus] = useState([]);
 
     useEffect(() => {
         MadeFetch();
@@ -48,7 +48,6 @@ const MadeModal = () => {
             setMadeMenus(MadeData);
         }
     };
-
     const initData = { selectedListName: "" };
     const [selectedMenu, setSelectedMenu] = useState(initData);
     const selectedName = selectedMenu.selectedListName;
@@ -68,8 +67,8 @@ const MadeModal = () => {
             <div className={classes.body}>
                 <div>Select Menu</div>
                 <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
-                    {MadeMenus.length > 0 &&
-                        MadeMenus.map((menu) => (
+                    {madeMenus.length > 0 &&
+                        madeMenus.map((menu) => (
                             <div key={menu.listId} className="flex justify-items-center">
                                 <input
                                     type="checkbox"
@@ -79,7 +78,6 @@ const MadeModal = () => {
                                     checked={selectedName === menu.listName}
                                     value={menu.listId}
                                 />
-                                <div>{menu.label}</div>
                                 <ListItem className={classes.root}>
                                     <MadeListCard menu={menu} />
                                 </ListItem>

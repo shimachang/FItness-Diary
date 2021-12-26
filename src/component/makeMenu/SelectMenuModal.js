@@ -35,6 +35,8 @@ const SelectMenuModal = (props) => {
                 weight: updateWeight,
                 rep: updateRep,
             });
+            setShowSelectMenuModal(false);
+            return;
         }
         if (addMenu) {
             Api.addNewStorageMenuList(

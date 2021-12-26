@@ -12,7 +12,6 @@ const SelectedDayEvent = () => {
         setEventDescription,
         setEventCreated,
     } = useContext(GlobalContext);
-    
     return (
         <div className="pt-4">
             {currentDayEvent !== "" &&
@@ -20,17 +19,17 @@ const SelectedDayEvent = () => {
                     <div
                         onClick={() => {
                             setShowEventUpdateModal(true);
-                            setEventListId(event.listId);
-                            setEventListName(event.listName);
-                            setEventLabel(event.label);
+                            setEventListId(event[0].listId);
+                            setEventListName(event[0].listName);
+                            setEventLabel(event[0].label);
                             setEventId(event.eventId);
                             setEventDescription(event.description);
                             setEventCreated(event.created_at);
                         }}
-                        className={`bg-${event.label}-200 text-center rounded-sm text-gray-600 text-sm mb-2 cursor-pointer`}
+                        className={`bg-${event[0].label}-200 text-center rounded-sm text-gray-600 text-sm mb-2 cursor-pointer`}
                         key={event.eventId}
                     >
-                        {event.listName}
+                        {event[0].listName}
                     </div>
                 ))}
         </div>

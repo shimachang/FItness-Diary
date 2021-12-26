@@ -2,7 +2,6 @@ import { ListItem, ListItemText, ListItemSecondaryAction, IconButton } from "@ma
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useContext } from "react";
 import GlobalContext from "../../context/GlobalContext";
-import DeleteButton from "./DeleteButton";
 
 const CurrentMenuList = () => {
     const { currentMenuList, setCurrentMenuList } = useContext(GlobalContext);
@@ -22,7 +21,13 @@ const CurrentMenuList = () => {
                     <ListItemText primary={menu.weight} />
                     <ListItemText primary={menu.rep} />
                     <ListItemSecondaryAction>
-                        <DeleteButton i={i} deleteHandle={deleteHandle} />
+                        <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => deleteHandle(i)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>
             </div>
