@@ -8,27 +8,16 @@ import { TodayContext } from "../../context/TodayContext";
 
 const TodayMenus = () => {
     const { currentUser } = useContext(AuthContext);
-    const { todayEvent, setTodayEvent, todayWeight } = useContext(TodayContext);
+    const { todayEvent, setTodayEvent } = useContext(TodayContext);
     const [checkedValues, setCheckedValues] = useState([]);
-    const [finishEvent, setFinishEvent] = useState([]);
-    const [finishWeight, setFinishWeight] = useState([]);
     useEffect(() => {
         menuListFetch();
     }, [currentUser]);
-    const handleChange = (e) => {
-        // let obj = {}
-        if (checkedValues.includes(e.target.value)) {
-            setCheckedValues(checkedValues.filter((val) => val !== e.target.value));
-            setFinishEvent(finishEvent.filter((val) => val !== e.target.value));
-        } else {
-            setCheckedValues([...checkedValues, e.target.value]);
-            setFinishEvent([...finishEvent, e.target.value]);
-            setFinishWeight([...finishWeight, todayWeight]);
-            // for (let i = 0; i < finishEvent.length; i++) {
-            //     obj.name =finishEvent[i]
-            // }
-        }
-        // console.log(obj)
+    const handleChange = (isChecked, listIndex, menuIndex) => {
+        console.log(isChecked, listIndex, menuIndex);
+        isChecked
+            ? (todayEvent[listIndex][0].menus[menuIndex].isChecked = false)
+            : (todayEvent[listIndex][0].menus[menuIndex].isChecked = true);
     };
     const menuListFetch = async () => {
         if (dig(currentUser, "uid")) {
@@ -74,12 +63,7 @@ const TodayMenus = () => {
                     </span>
                 </button>
                 <div className="my-6">
-                    {todayEvent && (
-                        <TodayMenuList
-                            checkedValues={checkedValues}
-                            handleChange={handleChange}
-                        />
-                    )}
+                    {todayEvent && <TodayMenuList handleChange={handleChange} />}
                 </div>
             </div>
         </>
