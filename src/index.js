@@ -6,13 +6,28 @@ import reportWebVitals from "./reportWebVitals";
 import "dayjs/locale/ja";
 import dayjs from "dayjs";
 import ContextWrapper from "./context/ContextWrapper";
+import { AuthProvider } from "./context/AuthContext";
+import UpdateProvider from "./context/UpdateContext";
+import MenuProvider from "./context/MenuContext";
+import { TodayProvider } from "./context/TodayContext";
+import RouterProvider from "./context/RouterContext";
 
 dayjs.locale("ja");
 
 ReactDOM.render(
     <React.StrictMode>
         <ContextWrapper>
-            <App />
+            <AuthProvider>
+                <RouterProvider>
+                    <UpdateProvider>
+                        <MenuProvider>
+                            <TodayProvider>
+                                <App />
+                            </TodayProvider>
+                        </MenuProvider>
+                    </UpdateProvider>
+                </RouterProvider>
+            </AuthProvider>
         </ContextWrapper>
     </React.StrictMode>,
     document.getElementById("root")

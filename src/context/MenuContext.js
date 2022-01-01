@@ -9,6 +9,7 @@ export const MenuProvider = ({ children }) => {
     const [addWeight, setAddWeight] = useState("");
     const [addRep, setAddRep] = useState("");
     const [addLabel, setAddLabel] = useState("");
+    const [addSetName, setAddSetName] = useState("");
     const value = {
         addTarget,
         setAddTarget,
@@ -22,6 +23,8 @@ export const MenuProvider = ({ children }) => {
         setAddRep,
         addLabel,
         setAddLabel,
+        addSetName,
+        setAddSetName,
     };
 
     return <MenuContext.Provider value={value}>{children}</MenuContext.Provider>;

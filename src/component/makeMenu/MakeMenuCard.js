@@ -1,6 +1,7 @@
 import SelectWeight from "./SelectWeight";
 import SelectRep from "./SelectRep";
 import SelectTarget from "./SelectTarget";
+import SelectSet from "./SelectSetName";
 
 const MakeMenuCard = () => {
     return (
@@ -9,6 +10,7 @@ const MakeMenuCard = () => {
                 <SelectTarget className="pt-2" />
                 <SelectWeight className="pt-2" />
                 <SelectRep className="pt-2" />
+                <SelectSet className="pt-2"/>
             </div>
         </div>
     );

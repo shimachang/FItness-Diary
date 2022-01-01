@@ -8,6 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core";
+import { RouterContext } from "../../context/RouterContext";
 
 const useStyles = makeStyles(() => ({
     toolbar: {
@@ -23,9 +24,10 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const Header = ({ setTab }) => {
+const Header = () => {
     const classes = useStyles();
     const currentUser = useContext(AuthContext);
+    const {tab, setTab} = useContext(RouterContext)
 
     const buttonRender = () => {
         let buttonDom;

@@ -20,11 +20,14 @@ const SelectMenuModal = (props) => {
         setAddWeight,
         addRep,
         setAddRep,
+        addSetName,
+        setAddSetName
     } = useContext(MenuContext);
-    const { updateTarget, updateCategory, updateMenu, updateWeight, updateRep } =
+    const { updateTarget, updateCategory, updateMenu, updateWeight, updateRep, updateSetName} =
         useContext(UpdateContext);
     const { setShowSelectMenuModal, showUpdateMadeModal, currentMenuList } =
         useContext(GlobalContext);
+        console.log(addSetName)
     const currentUser = useContext(AuthContext);
     const submit = () => {
         if (showUpdateMadeModal) {
@@ -34,6 +37,8 @@ const SelectMenuModal = (props) => {
                 menu: updateMenu,
                 weight: updateWeight,
                 rep: updateRep,
+                set: updateSetName,
+                isChecked: false,
             });
             setShowSelectMenuModal(false);
             return;
@@ -45,13 +50,15 @@ const SelectMenuModal = (props) => {
                 addCategory,
                 addMenu,
                 addWeight,
-                addRep
+                addRep,
+                addSetName,
             );
             setAddTarget("");
             setAddCategory("");
             setAddMenu("");
             setAddWeight("");
             setAddRep("");
+            setAddSetName("")
             setShowSelectMenuModal(false);
         }
         props.fetch();

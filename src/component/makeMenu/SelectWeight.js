@@ -7,25 +7,31 @@ import Select from "@mui/material/Select";
 import { MenuContext } from "../../context/MenuContext";
 import { UpdateContext } from "../../context/UpdateContext";
 import { TodayContext } from "../../context/TodayContext";
+import { RouterContext } from "../../context/RouterContext";
 
-const SelectWeight = ({todayEvent, listIndex, menuIndex}) => {
-    const initData = todayEvent ? todayEvent[listIndex][0].menus[menuIndex].weight : "";
-
+const SelectWeight = ({ listIndex, menuIndex }) => {
+    const { tab } = useContext(RouterContext);
+    const { todayEvent, setTodayEvent, todayWeight, setTodayWeight } = useContext(TodayContext);
+    const initData = tab === "todayMenus" ? todayEvent[listIndex][0].menus[menuIndex].weight : "";
     const [currentWeight, setCurrentWeight] = useState(initData);
-    const {setAddWeight} = useContext(MenuContext)
-    const {setUpdateWeight} = useContext(UpdateContext)
-    const {setTodayWeight} = useContext(TodayContext)
-    const handleChange = (event) => {
-        setCurrentWeight(event.target.value);
+    const { setAddWeight } = useContext(MenuContext);
+    const { setUpdateWeight } = useContext(UpdateContext);
+
+    const handleChange = (e) => {
+        setCurrentWeight(e.target.value);
+        if (tab === "todayMenus") {
+            todayEvent[listIndex][0].menus[menuIndex].weight = e.target.value;
+        }
+        setTodayEvent(todayEvent);
     };
     useEffect(() => {
-        setUpdateWeight(currentWeight)
-        setAddWeight(currentWeight)
-        setTodayWeight(currentWeight)
-    }, [currentWeight])
+        setUpdateWeight(currentWeight);
+        setAddWeight(currentWeight);
+        setTodayWeight(currentWeight);
+    }, [currentWeight]);
 
     return (
-        <Box sx={{ minWidth: 90  }}>
+        <Box sx={{ minWidth: 90 }}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Weight</InputLabel>
                 <Select
@@ -37,7 +43,7 @@ const SelectWeight = ({todayEvent, listIndex, menuIndex}) => {
                 >
                     <MenuItem value={10}>10kg</MenuItem>
                     <MenuItem value={15}>15kg</MenuItem>
-                    <MenuItem value={29}>20kg</MenuItem>
+                    <MenuItem value={20}>20kg</MenuItem>
                 </Select>
             </FormControl>
         </Box>

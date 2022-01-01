@@ -10,6 +10,7 @@ import { UpdateContext } from "../../context/UpdateContext";
 const UpdateMadeModal = () => {
     const { setShowUpdateMadeModal, setShowSelectMenuModal, currentMenuList } =
         useContext(GlobalContext);
+        console.log(currentMenuList)
     const { updateLabel } = useContext(UpdateContext);
     const [listName, setListName] = useState(currentMenuList[0].listName);
     const submit = () => {

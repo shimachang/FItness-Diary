@@ -6,16 +6,22 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuContext } from "../../context/MenuContext";
 import { UpdateContext } from "../../context/UpdateContext";
+import { TodayContext } from "../../context/TodayContext";
+import { RouterContext } from "../../context/RouterContext";
 
-const SelectRep = ({todayEvent, listIndex, menuIndex}) => {
-    const initData = todayEvent ? todayEvent[listIndex][0].menus[menuIndex].rep : "";
-
+const SelectRep = ({ listIndex, menuIndex }) => {
+    const { tab } = useContext(RouterContext);
+    const { todayEvent, setTodayEvent } = useContext(TodayContext);
+    const initData = tab === "todayMenus" ? todayEvent[listIndex][0].menus[menuIndex].rep : "";
     const { setAddRep } = useContext(MenuContext);
     const { setUpdateRep } = useContext(UpdateContext);
     const [currentRep, setCurrentRep] = useState(initData);
-
-    const handleChange = (event) => {
-        setCurrentRep(event.target.value);
+    const handleChange = (e) => {
+        setCurrentRep(e.target.value);
+        if (tab === "todayMenus") {
+            todayEvent[listIndex][0].menus[menuIndex].rep = e.target.value;
+        }
+        setTodayEvent(todayEvent);
     };
 
     useEffect(() => {

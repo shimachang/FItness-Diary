@@ -14,6 +14,7 @@ export const getInitCalenderEvents = async (uid) => {
                 uid: data.uid,
                 eventId: data.eventId,
                 created_at: data.created_at,
+                isComplete: data.isComplete,
             });
         });
         return eventLists;
@@ -32,8 +33,10 @@ export const getNewStorage = async (uid) => {
                 menu: data.menu,
                 weight: data.weight,
                 rep: data.rep,
+                set: data.set,
                 uid: data.uid,
                 id: data.id,
+                isChecked: data.isChecked
             });
         });
         return menuLists;
@@ -112,7 +115,8 @@ export const addNewStorageMenuList = (
     addCategory,
     addMenu,
     addWeight,
-    addRep
+    addRep,
+    addSetName
 ) => {
     const collection = db.collection("users").doc(currentUser).collection("NewStorage");
     const newDoc = collection.doc().id;
@@ -123,8 +127,10 @@ export const addNewStorageMenuList = (
         menu: addMenu,
         weight: addWeight,
         rep: addRep,
+        set: addSetName,
         created_at: firebaseTimeStamp,
         id: newDoc,
+        isChecked: false,
     });
 };
 
@@ -152,6 +158,7 @@ export const addEvents = (listId, currentUser, day, description) => {
         eventId: newDoc,
         day: day,
         description: description,
+        isComplete: false
     });
 };
 // export const updateEventWithMyMenuList =  async (uid, id) => {

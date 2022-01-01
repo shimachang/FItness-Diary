@@ -8,14 +8,12 @@ import { AddCircleOutlineOutlined } from "@material-ui/icons";
 import { MenuContext } from "../../context/MenuContext";
 import GlobalContext from "../../context/GlobalContext";
 import MenuListCard from "./MenuListCard";
-import { UpdateContext } from "../../context/UpdateContext";
 
 const MenuList = (props) => {
     const [listName, setListName] = useState("");
     const currentUser = useContext(AuthContext);
     const { addLabel } = useContext(MenuContext);
     const { setShowSelectMenuModal, setShowMakeMenuModal } = useContext(GlobalContext);
-    const { updateCategory, updateTarget } = useContext(UpdateContext);
     const propsMenus = props.menus;
     const submit = async () => {
         if (propsMenus) {

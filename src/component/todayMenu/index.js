@@ -7,30 +7,29 @@ import TodayMenuList from "./TodayMeneList";
 import { TodayContext } from "../../context/TodayContext";
 
 const TodayMenus = () => {
-    const initData = {
-        menu: "",
-        weight: "",
-        rep: "",
-    };
     const { currentUser } = useContext(AuthContext);
-    const { todayWeight } = useContext(TodayContext);
-    const [todayEvent, setTodayEvent] = useState("");
+    const { todayEvent, setTodayEvent, todayWeight } = useContext(TodayContext);
     const [checkedValues, setCheckedValues] = useState([]);
-    const [finishEvent, setFinishEvent] = useState(initData);
+    const [finishEvent, setFinishEvent] = useState([]);
+    const [finishWeight, setFinishWeight] = useState([]);
     useEffect(() => {
         menuListFetch();
     }, [currentUser]);
-    console.log(todayWeight);
     const handleChange = (e) => {
+        // let obj = {}
         if (checkedValues.includes(e.target.value)) {
             setCheckedValues(checkedValues.filter((val) => val !== e.target.value));
             setFinishEvent(finishEvent.filter((val) => val !== e.target.value));
         } else {
             setCheckedValues([...checkedValues, e.target.value]);
             setFinishEvent([...finishEvent, e.target.value]);
+            setFinishWeight([...finishWeight, todayWeight]);
+            // for (let i = 0; i < finishEvent.length; i++) {
+            //     obj.name =finishEvent[i]
+            // }
         }
+        // console.log(obj)
     };
-    console.log(finishEvent);
     const menuListFetch = async () => {
         if (dig(currentUser, "uid")) {
             const menuLists = await Api.getMyMenuLists(currentUser.uid);
@@ -78,7 +77,6 @@ const TodayMenus = () => {
                     {todayEvent && (
                         <TodayMenuList
                             checkedValues={checkedValues}
-                            todayEvent={todayEvent}
                             handleChange={handleChange}
                         />
                     )}

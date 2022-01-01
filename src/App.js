@@ -1,16 +1,12 @@
 import Calender from "./component/calender";
 import Header from "./component/global/Header";
-import { AuthProvider } from "./context/AuthContext";
-import UpdateProvider from "./context/UpdateContext";
 import MakeMenu from "./component/makeMenu";
 import TodayMenus from "./component/todayMenu";
-import { useState } from "react";
-import MenuProvider from "./context/MenuContext";
-import { TodayProvider } from "./context/TodayContext";
+import { useContext } from "react";
+import { RouterContext } from "./context/RouterContext";
 
 const App = () => {
-    const [tab, setTab] = useState("todayMenus");
-
+    const { tab } = useContext(RouterContext);
     const Body = () => {
         switch (tab) {
             case "todayMenus":
@@ -26,16 +22,10 @@ const App = () => {
     };
 
     return (
-        <AuthProvider>
-            <UpdateProvider>
-                <MenuProvider>
-                    <TodayProvider>
-                        <Header setTab={setTab} />
-                        <Body />
-                    </TodayProvider>
-                </MenuProvider>
-            </UpdateProvider>
-        </AuthProvider>
+        <>
+            <Header />
+            <Body />
+        </>
     );
 };
 

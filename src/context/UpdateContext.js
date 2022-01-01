@@ -8,6 +8,7 @@ export const UpdateProvider = ({ children }) => {
     const [updateRep, setUpdateRep] = useState("");
     const [updateTarget, setUpdateTarget] = useState("");
     const [updateWeight, setUpdateWeight] = useState("");
+    const [updateSetName, setUpdateSetName] = useState("");
     const value = {
         updateCategory,
         setUpdateCategory,
@@ -21,6 +22,8 @@ export const UpdateProvider = ({ children }) => {
         setUpdateWeight,
         updateTarget,
         setUpdateTarget,
+        updateSetName,
+        setUpdateSetName
     };
 
     return <UpdateContext.Provider value={value}>{children}</UpdateContext.Provider>;
