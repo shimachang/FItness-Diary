@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../../context/GlobalContext";
-import { getMonth } from "../../util";
+import { getMonth } from "../../functions/util";
 
 const SmallCalender = () => {
     const [currentMonthIndex, setCurrentMonthIndex] = useState(dayjs().month());
@@ -38,8 +38,14 @@ const SmallCalender = () => {
     };
     return (
         <div className="h-screen w-screen absolute left-0 top-0">
-            <div className="w-full h-full absolute bg-black bg-opacity-80 flex justify-center items-center">
-                <div className="relative w-5/6 h-1/2 bg-white mx-auto p-6">
+            <div
+                onClick={() => setShowSmallCalender(false)}
+                className="w-full h-full absolute bg-black bg-opacity-80 flex justify-center items-center"
+            >
+                <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative w-5/6 h-1/2 bg-white mx-auto p-6"
+                >
                     <header className="flex justify-between ">
                         <p className="text-gray-500 font-bold">
                             {dayjs(new Date(dayjs().year(), currentMonthIndex)).format(

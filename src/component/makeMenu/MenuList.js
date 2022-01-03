@@ -14,18 +14,20 @@ const MenuList = (props) => {
     const currentUser = useContext(AuthContext);
     const { addLabel } = useContext(MenuContext);
     const { setShowSelectMenuModal, setShowMakeMenuModal } = useContext(GlobalContext);
-    const propsMenus = props.menus;
+    const propsMenus = props.menus; 
+    const currentUid = dig(currentUser, "currentUser", "uid")
+    console.log(dig(currentUser, "currentUser", "uid"))
     const submit = async () => {
         if (propsMenus) {
             Api.addMyMenuList(
                 listName,
-                dig(currentUser, "currentUser", "uid"),
+                currentUid,
                 propsMenus,
                 addLabel
             );
-            const docs = await Api.getNewStorageDocsId(dig(currentUser, "currentUser", "uid"));
+            const docs = await Api.getNewStorageDocsId(currentUid);
             for (const doc of docs) {
-                Api.deleteNewStorage(dig(currentUser, "currentUser", "uid"), doc.id);
+                Api.deleteNewStorage(currentUid, doc.id);
             }
         }
         props.fetch();

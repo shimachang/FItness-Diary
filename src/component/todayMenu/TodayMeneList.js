@@ -6,7 +6,6 @@ import SelectWeight from "../makeMenu/SelectWeight";
 
 const TodayMenuList = ({ handleChange }) => {
     const { todayEvent } = useContext(TodayContext);
-    console.log(todayEvent);
     return (
         todayEvent &&
         todayEvent.map((e, listIndex) => (
@@ -23,8 +22,10 @@ const TodayMenuList = ({ handleChange }) => {
                                     className="rounded"
                                     type="checkbox"
                                     value={`${m.menu}${listIndex}`}
-                                    onChange={() => handleChange(m.isChecked, listIndex, menuIndex)}
-                                    defaultChecked={m.isChecked}
+                                    onChange={(e) =>
+                                        handleChange(e, m.isChecked, listIndex, menuIndex)
+                                    }
+                                    checked={m.isChecked}
                                 />
                             </label>
                             <div className="pt-5 pb-2 grid grid-cols-3">

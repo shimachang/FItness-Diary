@@ -11,6 +11,7 @@ import UpdateProvider from "./context/UpdateContext";
 import MenuProvider from "./context/MenuContext";
 import { TodayProvider } from "./context/TodayContext";
 import RouterProvider from "./context/RouterContext";
+import ShowContext from "./context/ShowContext";
 
 dayjs.locale("ja");
 
@@ -22,7 +23,9 @@ ReactDOM.render(
                     <UpdateProvider>
                         <MenuProvider>
                             <TodayProvider>
-                                <App />
+                                <ShowContext>
+                                    <App />
+                                </ShowContext>
                             </TodayProvider>
                         </MenuProvider>
                     </UpdateProvider>

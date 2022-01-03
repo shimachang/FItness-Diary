@@ -168,6 +168,19 @@ export const addEvents = (listId, currentUser, day, description) => {
 //         await doc.ref.delete()
 //     })
 // };
+
+export const addHistory = (currentUser, menus) => {
+    const collection = db.collection("users").doc(currentUser).collection("History");
+    const newDoc = collection.doc().id;
+    collection.doc(newDoc).set({
+        created_at: firebaseTimeStamp,
+        menus: menus,
+        uid: currentUser,
+        updated_at: firebaseTimeStamp,
+        eventId: newDoc,
+    });
+};
+
 export const updateEvents = (
     eventCreated,
     eventId,

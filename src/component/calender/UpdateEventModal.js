@@ -46,8 +46,11 @@ const EventUpdateModal = () => {
 
     return (
         <div className="h-screen w-screen absolute left-0 top-0">
-            <div className="w-full h-full absolute bg-black bg-opacity-80 flex justify-center items-center">
-                <div className="relative max-w-lg w-5/6 h-1/2 bg-white mx-auto p-6">
+            <div
+                onClick={() => setShowEventUpdateModal(false)}
+                className="w-full h-full absolute bg-black bg-opacity-80 flex justify-center items-center"
+            >
+                <div onClick={(e) => e.stopPropagation()} className="relative max-w-lg w-5/6 h-1/2 bg-white mx-auto p-6 rounded-lg">
                     <form className="bg-white rounded-lg shadow-2xl">
                         <header className="w-full bg-gray-100 px-4 py-2 flex justify-between items-center">
                             <span className="material-icons-outlined text-gray-400">

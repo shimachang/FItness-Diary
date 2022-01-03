@@ -1,7 +1,7 @@
 import CalenderHeader from "./CalenderHeader";
 import Sidebar from "./Sidebar";
 import Month from "./Month";
-import { getMonth } from "../../util";
+import { getMonth } from "../../functions/util";
 import React, { useState, useContext, useEffect } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import EventModal from "./EventModal";

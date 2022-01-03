@@ -63,8 +63,8 @@ const MadeModal = () => {
     };
 
     return (
-        <div className={classes.container}>
-            <div className={classes.body}>
+        <div onClick={() => setShowMadeModal(false)} className={classes.container}>
+            <div onClick={(e) => e.stopPropagation()} className={classes.body}>
                 <div>Select Menu</div>
                 <div className="container text-center mx-auto mt-4 md-10 py-4 flex flex-col justify-center">
                     {madeMenus.length > 0 &&

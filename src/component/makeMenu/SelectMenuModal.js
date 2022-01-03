@@ -21,13 +21,13 @@ const SelectMenuModal = (props) => {
         addRep,
         setAddRep,
         addSetName,
-        setAddSetName
+        setAddSetName,
     } = useContext(MenuContext);
-    const { updateTarget, updateCategory, updateMenu, updateWeight, updateRep, updateSetName} =
+    const { updateTarget, updateCategory, updateMenu, updateWeight, updateRep, updateSetName } =
         useContext(UpdateContext);
     const { setShowSelectMenuModal, showUpdateMadeModal, currentMenuList } =
         useContext(GlobalContext);
-        console.log(addSetName)
+    console.log(addSetName);
     const currentUser = useContext(AuthContext);
     const submit = () => {
         if (showUpdateMadeModal) {
@@ -51,22 +51,28 @@ const SelectMenuModal = (props) => {
                 addMenu,
                 addWeight,
                 addRep,
-                addSetName,
+                addSetName
             );
             setAddTarget("");
             setAddCategory("");
             setAddMenu("");
             setAddWeight("");
             setAddRep("");
-            setAddSetName("")
+            setAddSetName("");
             setShowSelectMenuModal(false);
         }
         props.fetch();
     };
     return (
         <div className="h-screen w-screen fixed left-0 top-0">
-            <div className="w-full h-full absolute bg-black bg-opacity-40 flex justify-center items-center">
-                <form className="mt-2 bg-white relative rounded-lg shadow-2xl">
+            <div
+                onClick={() => setShowSelectMenuModal(false)}
+                className="w-full h-full absolute bg-black bg-opacity-40 flex justify-center items-center"
+            >
+                <form
+                    onClick={(e) => e.stopPropagation()}
+                    className="mt-2 bg-white relative rounded-lg shadow-2xl"
+                >
                     <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
                         <span className="material-icons-outlined text-gray-400">drag_handle</span>
                         <span>{showUpdateMadeModal ? "Up Select Menu" : "Select Menu"}</span>
