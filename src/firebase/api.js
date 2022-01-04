@@ -177,7 +177,7 @@ export const addHistory = (currentUser, menus) => {
         menus: menus,
         uid: currentUser,
         updated_at: firebaseTimeStamp,
-        eventId: newDoc,
+        historyId: newDoc,
     });
 };
 

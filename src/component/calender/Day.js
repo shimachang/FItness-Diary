@@ -4,6 +4,9 @@ import GlobalContext from "../../context/GlobalContext";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
 import dig from "object-dig";
+import { getCurrentMonthClass } from "../../functions/getCurrentMonthClass";
+import { getDayClass } from "../../functions/getDayClass";
+import { getCurrentDayClass } from "../../functions/getCurrentDayClass";
 
 const Day = ({ day, rowIdx }) => {
     const {
@@ -25,14 +28,12 @@ const Day = ({ day, rowIdx }) => {
     useEffect(() => {
         eventFetch();
     }, [currentUser, day, showEventModal, showEventUpdateModal]);
-
-    const format = "DD-MM-YY";
     const eventFetch = async () => {
         if (dig(currentUser, "currentUser", "uid")) {
             const eventFetch = await Api.getInitCalenderEvents(currentUser.currentUser.uid);
             const menuFetch = await Api.getMyMenuLists(currentUser.currentUser.uid);
             const filterEvents = eventFetch.filter(
-                (evt) => dayjs(evt.day).format(format) === day.format(format)
+                (evt) => dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
             );
             const dayWithEventId = filterEvents.map((e) => e.listId);
             let newArray = [];
@@ -45,18 +46,6 @@ const Day = ({ day, rowIdx }) => {
             setDayEvents(newArray);
         }
     };
-    const getCurrentDayClass = () => {
-        return day.format(format) === dayjs().format(format)
-            ? "bg-blue-600 text-white rounded-full w-7"
-            : "";
-    };
-
-    const getDayClass = (day) => {
-        const currentDay = day.format(format);
-        const selectDay = daySelected && daySelected.format(format);
-        return currentDay === selectDay ? "bg-blue-100 text-blue-600 font-bold" : "";
-    };
-
     const getEvent = () => {
         dayEvents.length > 0 ? setCurrentDayEvent(dayEvents) : setCurrentDayEvent("");
     };
@@ -67,12 +56,14 @@ const Day = ({ day, rowIdx }) => {
                 setDaySelected(day);
                 getEvent();
             }}
-            className={`border border-gray-200 flex flex-col ${getDayClass(day)}`}
+            className={`border border-gray-200 flex flex-col ${getCurrentMonthClass(
+                day
+            )} ${getDayClass(day, daySelected)}`}
         >
             <header className="flex flex-col items-center">
                 {rowIdx === 0 && <p className="text-sm mt-1">{day.format("dd")}</p>}
-                <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}>
-                    {day.format("DD")}
+                <p className={`text-sm p-1 my-1 text-center ${getCurrentDayClass(day)}`}>
+                    {day.format("D")}
                 </p>
             </header>
             <div className={`flex-1`}>

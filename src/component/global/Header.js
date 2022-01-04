@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 const Header = () => {
     const classes = useStyles();
     const currentUser = useContext(AuthContext);
-    const {tab, setTab} = useContext(RouterContext)
+    const { setTab } = useContext(RouterContext);
 
     const buttonRender = () => {
         let buttonDom;

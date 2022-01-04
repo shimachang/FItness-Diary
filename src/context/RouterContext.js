@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export const RouterContext = React.createContext();
 export const RouterProvider = ({ children }) => {
-    const [tab, setTab] = useState("todayMenus");
+    const [tab, setTab] = useState("calender");
     const value = {
         tab,
         setTab,
