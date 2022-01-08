@@ -15,6 +15,7 @@ export const getInitCalenderEvents = async (uid) => {
                 eventId: data.eventId,
                 created_at: data.created_at,
                 isComplete: data.isComplete,
+                historyId: data.historyId,
             });
         });
         return eventLists;
@@ -36,7 +37,7 @@ export const getNewStorage = async (uid) => {
                 set: data.set,
                 uid: data.uid,
                 id: data.id,
-                isChecked: data.isChecked
+                isChecked: data.isChecked,
             });
         });
         return menuLists;
@@ -77,6 +78,25 @@ export const getCurrentMyMenuList = async (uid, listId) => {
         });
         return menuLists;
     });
+};
+
+export const getHistoryWithEventId = async (uid, historyId) => {
+    const historyRef = await db.collection("users").doc(uid).collection("History");
+    return await historyRef.where("historyId", "==", historyId).get().then((snapshot) => {
+        let menuLists = []
+        snapshot.forEach((doc) => {
+            menuLists.push(doc.data());
+        })
+        return menuLists
+    })
+    // return query.then((snapshot) => {
+    //     let menuLists = [];
+    //     const data = snapshot.data();
+    //     menuLists.push({
+    //         menus: data.menus,
+    //     });
+    //     return menuLists;
+    // });
 };
 
 export const deleteNewStorage = (uid, id) => {
@@ -158,26 +178,36 @@ export const addEvents = (listId, currentUser, day, description) => {
         eventId: newDoc,
         day: day,
         description: description,
-        isComplete: false
+        isComplete: false,
+        historyId: "",
     });
 };
-// export const updateEventWithMyMenuList =  async (uid, id) => {
-//     const ref = db.collection("users").doc(uid).collection("Events");
-//     const query =  await ref.where("listId", "==", id).get();
-//     query.docs.forEach( async doc => {
-//         await doc.ref.delete()
-//     })
-// };
 
-export const addHistory = (currentUser, menus) => {
-    const collection = db.collection("users").doc(currentUser).collection("History");
-    const newDoc = collection.doc().id;
-    collection.doc(newDoc).set({
+export const addHistoryWithEvents = (currentUser, eventData) => {
+    const historyRef = db.collection("users").doc(currentUser).collection("History");
+    const eventRef = db.collection("users").doc(currentUser).collection("Events");
+    const historyDoc = historyRef.doc().id;
+
+    historyRef.doc(historyDoc).set({
         created_at: firebaseTimeStamp,
-        menus: menus,
+        menus: eventData[0].menus,
         uid: currentUser,
         updated_at: firebaseTimeStamp,
-        historyId: newDoc,
+        label: eventData[0].label,
+        listName: eventData[0].listName,
+        historyId: historyDoc,
+    });
+
+    eventRef.doc(eventData[1].eventId).set({
+        created_at: eventData[1].created_at,
+        listId: eventData[1].listId,
+        uid: currentUser,
+        updated_at: firebaseTimeStamp,
+        eventId: eventData[1].eventId,
+        day: eventData[1].day,
+        description: eventData[1].description,
+        isComplete: true,
+        historyId: historyDoc,
     });
 };
 
@@ -203,6 +233,7 @@ export const updateEvents = (
             day: day,
             description: description,
             label: label,
+            historyId: "",
         },
         { marge: true }
     );

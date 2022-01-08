@@ -79,7 +79,7 @@ const EventUpdateModal = () => {
                                 </div>{" "}
                                 <div>{eventListName ? eventListName : "add a menu"}</div>
                                 <span
-                                    className="material-icons-outlined text-gray-400"
+                                    className="material-icons-outlined text-black-400"
                                     onClick={() => setShowSmallCalender(true)}
                                 >
                                     schedule

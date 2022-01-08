@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import * as Api from "../../firebase/api";
 import dig from "object-dig";
-import TodayMenuList from "./TodayMeneList";
+import TodayMenuList from "./TodayMenuList";
 import { TodayContext } from "../../context/TodayContext";
 import { convertingArray } from "../../functions/convertingArray";
 import SuccessModal from "./SuccessModal";
@@ -49,7 +49,7 @@ const TodayMenus = () => {
                 <div className="my-4">
                     {todayEvent.length ? "今日は筋トレの日です!!" : "今日はおやすみです..."}
                 </div>
-                <div className="my-6">{todayEvent && <TodayMenuList submit={submit} />}</div>
+                <div className="my-6">{todayEvent && <TodayMenuList menuListFetch={menuListFetch} />}</div>
             </div>
         </>
     );

@@ -4,10 +4,17 @@ import SelectRep from "../makeMenu/SelectRep";
 import SelectSet from "../makeMenu/SelectSetName";
 import SelectWeight from "../makeMenu/SelectWeight";
 import { Button } from "@material-ui/core";
+import { ShowContext } from "../../context/ShowContext";
+import * as Api from "../../firebase/api"
+import { AuthContext } from "../../context/AuthContext";
+import dig from "object-dig"
 
-const TodayMenuListCard = ({ event, listIndex }) => {
+const TodayMenuListCard = ({ event, listIndex, menuListFetch }) => {
     const { todayEvent } = useContext(TodayContext);
+    const { setShowSuccessModal} = useContext(ShowContext)
+    const currentUser = useContext(AuthContext)
     const [checkedValues, setCheckedValues] = useState([]);
+    const currentUid = dig(currentUser, "currentUser", "uid");
     const handleChange = (e, isChecked, listIndex, menuIndex) => {
         if (isChecked) {
             todayEvent[listIndex][0].menus[menuIndex].isChecked = false;
@@ -17,7 +24,12 @@ const TodayMenuListCard = ({ event, listIndex }) => {
             setCheckedValues([...checkedValues, e.target.value]);
         }
     };
+    console.log(todayEvent[listIndex])
     const submit = () => {
+        Api.addHistoryWithEvents(currentUid, todayEvent[listIndex])
+        setCheckedValues([])
+        setShowSuccessModal(true)
+        menuListFetch()
 
     }
     return (

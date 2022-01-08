@@ -2,12 +2,17 @@ import { useContext } from "react";
 import { TodayContext } from "../../context/TodayContext";
 import TodayMenuListCard from "./TodayMenuListCard";
 
-const TodayMenuList = () => {
+const TodayMenuList = ({ menuListFetch }) => {
     const { todayEvent } = useContext(TodayContext);
     return (
         todayEvent &&
         todayEvent.map((event, listIndex) => (
-            <TodayMenuListCard event={event} listIndex={listIndex} />
+            <TodayMenuListCard
+                key={listIndex}
+                event={event}
+                listIndex={listIndex}
+                menuListFetch={menuListFetch}
+            />
         ))
     );
 };
